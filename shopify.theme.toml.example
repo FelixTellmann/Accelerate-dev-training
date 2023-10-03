@@ -1,9 +1,9 @@
 [environments.development]
-theme = "159569674513"
+theme = "162051981628"
 store = "platter-dev.myshopify.com"
 path = "./themes/development"
 
 [environments.production]
-theme = "159569674513"
+theme = "162051981628"
 store = "platter-dev.myshopify.com"
 path = "./themes/production"

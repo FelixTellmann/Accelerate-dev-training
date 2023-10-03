@@ -9,6 +9,7 @@
     "dev:tailwindcss": "npx tailwindcss --config tailwind.config.js --postcss postcss.config.js -i assets/_tailwind.css -o assets/tailwind.css.liquid --watch",
     "dev:theme": "shopify-theme-dev",
     "dev:create": "shopify theme share --environment development",
+    "dev:list": "shopify theme list",
     "dev:pull": "shopify theme pull --environment development",
     "dev:serve": "shopify theme dev --environment development --live-reload hot-reload --theme-editor-sync",
     "prod": "cross-env SHOPIFY_THEME_FOLDER=themes/production npm-run-all --parallel dev:tailwindcss dev:esbuild dev:theme dev:assets:js",
