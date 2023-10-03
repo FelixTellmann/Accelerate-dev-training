@@ -1,0 +1,41 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign layout = section.settings.layout
+  assign padding_top = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign responsive_visibility = section.settings.responsive_visibility
+  assign color_scheme = section.settings.color_scheme
+  assign sectionID = section.settings.sectionID
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+<div id="{{ sectionID }}"
+     class="benefit-tabs container-bg-full {{ color_scheme }} {{ padding_top }} {{ padding_bottom }} {{ responsive_visibility }}">
+  <section class="grid lg:grid-cols-2 gap-6"
+           data-scroll-slider>
+    <div>
+      <main class="relative flex justify-center">
+        <div class="lg:max-w-lg mx-auto flex flex-1 gap-8 overflow-x-auto pb-10 snap-mandatory snap-x w-full"
+             data-scroll-container>
+          {% for block in section.blocks %}
+            {% render 'benefit-tabs.benefit', block: block, forloop: forloop, type: 'image-mobile-content' %}
+          {% endfor %}
+        </div>
+        <div data-scroll-controls
+             class="hidden select-none bottom-3 absolute left-0 w-full justify-center">
+          {% for block in section.blocks %}
+            {% render 'benefit-tabs.benefit', block: block, forloop: forloop, type: 'scroll-tab-button' %}
+          {% endfor %}
+
+        </div>
+      </main>
+    </div>
+    <div class="flex flex-col justify-center h-full max-w-xl mx-auto {{ layout }}">
+      <div class="hidden lg:grid gap-5 justify-center items-center auto-rows-min mb-2">
+        {% for block in section.blocks %}
+          {% render 'benefit-tabs.benefit', block: block, forloop: forloop, type: 'desktop-text-content' %}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,16 @@
+<svg class="sr-only">
+  {% for star_percentage in (0..20) %}
+    {% assign i = star_percentage | ceil | times: 5 %}
+
+    <linearGradient id="star-{{ i }}">
+      <stop offset="0%"
+            stop-color="var(--color-review-stars--hex)" />
+      <stop offset="{{ i }}%"
+            stop-color="var(--color-review-stars--hex)" />
+      <stop offset="{{ i }}%"
+            stop-color="rgb(var(--color-gray-400))" />
+      <stop offset="100%"
+            stop-color="rgb(var(--color-gray-400))" />
+    </linearGradient>
+  {% endfor %}
+</svg>

@@ -1,0 +1,8 @@
+
+node_modules
+.idea
+.vscode
+./package.json
+package-lock.json
+./README.md
+!assets/package.json

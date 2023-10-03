@@ -1,0 +1,21 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign rating = block.settings.rating
+  assign review = block.settings.review
+  assign author = block.settings.author
+  assign slide = block.settings.slide
+  assign slide_speed = block.settings.slide_speed
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+<figure id="block--{{ block.id }}" {{ block.shopify_attributes }}
+        data-slideshow-slide="{{ forloop.index0 }}"
+        class="snap-start group w-full h-full relative overflow-hidden grid gap-6">
+  <header>
+    {% render '_star-rating', rating: rating, class: 'h-6', id_prefix: block.id %}
+  </header>
+  {% render 'richtext', type: section.settings.review_font, content: review, custom_tag: "blockquote" %}
+  <footer>
+    {% render 'richtext', type: section.settings.author_font, content: author, custom_tag: "cite" %}
+  </footer>
+</figure>

@@ -1,0 +1,111 @@
+{% comment %}
+
+Variables:
+ image: Image Drop
+ default_alt: string
+ class: string
+ placeholder:
+    | image
+    | collection-1
+    | collection-2
+    | collection-3
+    | collection-4
+    | collection-5
+    | collection-6
+    | lifestyle-1
+    | lifestyle-2
+    | product-1
+    | product-2
+    | product-3
+    | product-4
+    | product-5
+    | product-6
+
+{% endcomment %}
+
+
+{% assign class = class | append: " select-none" %}
+{% if image != blank %}
+
+  {% liquid
+
+    assign defaultSizes = '(max-width: 768px) 98vw, (max-width: 1200px) 50vw, 28vw'
+    assign sizes = sizes | default: defaultSizes
+
+    assign defaultSrcset = '180,300,400,600,800,1000,1200,1800,2400'
+
+    assign desiredSizes = defaultSrcset | split: ',' | uniq | compact
+    if width == blank and height != blank
+      assign checkWidth = height | times: image.aspect_ratio
+    endif
+    assign checkWidth = width | default: checkWidth | default: image.width
+    assign maxWidth = image.width | at_most: checkWidth | times: 1
+
+    assign defaultSrcset = ''
+    assign break = false
+
+    for size in desiredSizes
+      if break
+        break
+      endif
+      assign currentSize = size | times: 1
+
+      if maxWidth < currentSize
+        assign break = true
+      endif
+      assign currentWidth = currentSize
+      if image.aspect_ratio > 1.6
+        assign currentWidth = currentWidth | times: image.aspect_ratio
+      endif
+      assign imageUrl = image.src | image_url: width: currentWidth | append: " " | append: currentSize | append: 'w' | prepend: ','
+      assign defaultSrcset = defaultSrcset | append: imageUrl
+    endfor
+    assign srcset = srcset | default: defaultSrcset | replace_first: ','
+
+    assign alt = image.alt | default: default_alt
+    if image.presentation.focal_point
+      assign focalPointStyle = 'object-position: ' | append: image.presentation.focal_point | append: ';'
+    endif
+
+    if preload
+      assign loading = 'eager'
+    endif
+    unless loading
+      assign loading = 'lazy'
+    endunless
+    unless alt or role
+      assign role = 'presentation'
+    endunless
+    assign imageFile = image.src | image_url
+
+  %}
+
+  {{ image
+  | image_url: height: height, width: width
+  | image_tag: alt: alt, class: class, style: focalPointStyle, sizes: sizes, widths: widths, preload: preload, loading: loading, role: role, srcset: srcset, data-image: loading }}
+{% endif %}
+
+{% if image == blank and placeholder and placeholder != blank %}
+  {% assign svg = placeholder | placeholder_svg_tag %}
+  {% assign svgURI = 'data:image/svg+xml;utf8,' | append: svg %}
+  <img src='data:image/svg+xml;utf8,{{ placeholder | placeholder_svg_tag }}'
+       class="rounded-[inherit] border-2 border-gray-300 !w-[calc(100%-4px)] !h-[calc(100%-4px)] m-0.5 {{ class }}"
+       height="{{ height }}"
+       width="{{ width }}"
+       role="presentation" />
+{% endif %}
+
+{% if request.design_mode %}
+  {% if image %}
+    {% if image.alt == blank and default_alt == blank %}
+      <script>
+        window['missingImageAltTags'].push({
+          image: `{{ image }}`,
+          section: `{{ section.id }}`,
+          block: `{{ block.id }}`,
+        });
+      </script>
+    {% endif %}
+  {% endif %}
+{% endif %}
+

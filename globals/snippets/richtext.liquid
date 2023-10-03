@@ -1,0 +1,102 @@
+{% comment %}
+Variables:
+- type
+- content
+- class
+- html_attributes
+{% endcomment %}
+
+
+{% for i in (1..1) %}
+
+  {% for i in (1..15) %}
+    {% if content contains '[icon.' %}
+      {% assign split = content | replace_first: '[icon.', '|~|split|~|' | split: '|~|split|~|' %}
+      {% assign split_2 = split[1] | replace_first: ']', '|~|split|~|' | split: '|~|split|~|' %}
+      {% assign first = split[0] %}
+      {% assign icon = split_2[0] | trim | split: '.' | first %}
+      {% assign last = split_2[1] %}
+      {% capture content %}{{ first }}{% render '_icon', icon: icon, class: "h-[1em] align-middle inline-flex items-center justify-center" %}{{ last }}{% endcapture %}
+      {% continue %}
+    {% endif %}
+    {% break %}
+  {% endfor %}
+
+  {% liquid
+    assign escapedContent = content | strip_html | trim
+    assign containsSvg = false
+    if content contains "<svg"
+      assign containsSvg = true
+    endif
+    if content == blank or escapedContent == blank and containsSvg != true
+      break
+    endif
+    unless no_newlines or containsSvg
+      assign content = content | newline_to_br
+    endunless
+    assign font_group = 'font-group-' | append: type
+    if tag
+      assign content = '<' | append: tag | append: '>' | append: content | append: '</' | append: tag | append: '>'
+    endif
+    if opacity and opacity != 100
+      assign opacity = opacity | divided_by: 100.0
+      assign style = 'opacity: ' | append: opacity | append: ';' | append: style
+    endif
+
+    assign _h1_tag = 'typography_' | append: type | append: '_h1_tag'
+    assign h1_tag_open = '<' | append: settings[_h1_tag] | append: ' class="_h1">'
+    assign h1_tag_close = '</' | append: settings[_h1_tag] | append: '>'
+
+    assign _h2_tag = 'typography_' | append: type | append: '_h2_tag'
+    assign h2_tag_open = '<' | append: settings[_h2_tag] | append: ' class="_h2">'
+    assign h2_tag_close = '</' | append: settings[_h2_tag] | append: '>'
+
+    assign _h3_tag = 'typography_' | append: type | append: '_h3_tag'
+    assign h3_tag_open = '<' | append: settings[_h3_tag] | append: ' class="_h3">'
+    assign h3_tag_close = '</' | append: settings[_h3_tag] | append: '>'
+
+    assign _h4_tag = 'typography_' | append: type | append: '_h4_tag'
+    assign h4_tag_open = '<' | append: settings[_h4_tag] | append: ' class="_h4">'
+    assign h4_tag_close = '</' | append: settings[_h4_tag] | append: '>'
+
+    assign _h5_tag = 'typography_' | append: type | append: '_h5_tag'
+    assign h5_tag_open = '<' | append: settings[_h5_tag] | append: ' class="_h5">'
+    assign h5_tag_close = '</' | append: settings[_h5_tag] | append: '>'
+
+    assign _h6_tag = 'typography_' | append: type | append: '_h6_tag'
+    assign h6_tag_open = '<' | append: settings[_h6_tag] | append: ' class="_h6">'
+    assign h6_tag_close = '</' | append: settings[_h6_tag] | append: '>'
+
+    assign _p_tag = 'typography_' | append: type | append: '_p_tag'
+    assign p_tag_open = '<' | append: settings[_p_tag] | append: ' class="_p">'
+    assign p_tag_close = '</' | append: settings[_p_tag] | append: '>'
+
+    assign li_tag_open = '<li class="_p">'
+
+    assign contentArray = content | split: '</'
+    assign content = ''
+  %}
+
+  {% for tagItem in contentArray %}
+    {% if forloop.index0 != 0 %}
+      {% assign tagItem2 = "</" | append: tagItem %}
+    {% endif %}
+
+    {% assign tagItem3 = tagItem2 | default: tagItem %}
+
+    {% if tagItem3 contains '<li' %}
+      {% unless tagItem3 contains '<h1' or tagItem3 contains '<h2' or tagItem3 contains '<h3' or tagItem3 contains '<h4' or tagItem3 contains '<h5' or tagItem3 contains '<h6' %}
+        {% assign tagItem3 = tagItem3 | replace: '<li>', li_tag_open %}
+      {% endunless %}
+    {% endif %}
+
+    {% assign transformedContent = tagItem3 | replace: '<h1>', h1_tag_open | replace: '</h1>', h1_tag_close | replace: '<h2>', h2_tag_open | replace: '</h2>', h2_tag_close | replace: '<h3>', h3_tag_open | replace: '</h3>', h3_tag_close | replace: '<h4>', h4_tag_open | replace: '</h4>', h4_tag_close | replace: '<h5>', h5_tag_open | replace: '</h5>', h5_tag_close | replace: '<h6>', h6_tag_open | replace: '</h6>', h6_tag_close | replace: '<p>', p_tag_open | replace: '</p>', p_tag_close %}
+
+    {% assign content = content | append: transformedContent %}
+  {% endfor %}
+
+  <div {{ html_attributes }}
+      class="{{ font_group }} {{ class }}"
+    {% if style != blank %}style="{{ style }}"{% endif %}>{{ content }}</div>
+{% endfor %}
+

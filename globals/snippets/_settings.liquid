@@ -1,0 +1,688 @@
+
+{% comment %}
+
+FONTS
+
+{% endcomment %}
+{% if settings %}
+
+  {% for index in (1..5) %}
+    {% liquid
+
+      assign _font_family = 'font_family_' | append: index
+      assign _font_weights = 'font_weights_' | append: index
+      assign _font_custom_family = 'font_custom_family_' | append: index
+
+
+      assign font = settings[_font_family]
+      assign font_weights = settings[_font_weights] | strip_newlines | replace: ' ', "" | split: ','
+      assign font_custom_family = settings[_font_custom_family]
+    %}
+
+    {% if font_custom_family == blank and font.system? != true %}
+      {% for weight_style in font_weights %}
+        {% liquid
+          assign font_id = font.family | append: "_" | append: weight_style
+          if global_font_ids contains font_id
+            continue
+          endif
+          assign global_font_ids = global_font_ids | append: font_id | append: "|||"
+
+          if weight_style contains "i"
+            assign weight_style_i = weight_style | replace: ' ', "" | split: "i" | first | strip
+            assign font_family = font | font_modify: 'weight', weight_style_i
+            assign font_family = font_family | font_modify: 'style', 'italic'
+          elsif weight_style contains "o"
+            assign weight_style_o = weight_style | replace: ' ', "" | split: "o" | first | strip
+            assign font_family = font | font_modify: 'weight', weight_style_o
+            assign font_family = font_family | font_modify: 'style', 'oblique'
+          else
+            assign font_family = font | font_modify: 'weight', weight_style
+            assign font_family = font_family | font_modify: 'style', 'normal'
+          endif
+        %}
+        {{ font_family | font_face: font_display: 'swap' }}
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% comment %}
+
+TYPOGRAPHY
+
+{% endcomment %}
+{% if settings %}
+
+  {%- assign type_sizes = "h1,h2,h3,h4,h5,h6,p" | split: ',' -%}
+
+  {% assign global_font_ids = '' %}
+
+  {% for index in (1..4) %}
+    {% for tag in type_sizes %}
+      {% liquid
+        assign _font_family = 'typography_' | append: index | append: '_' | append: tag | append: '_font_family'
+        assign _size_weight_height = 'typography_' | append: index | append: '_' | append: tag | append: '_size_weight_height'
+        assign _spacing_transform_style = 'typography_' | append: index | append: '_' | append: tag | append: '_spacing_transform_style'
+
+        assign font_family = settings[_font_family]
+        assign size_weight_height = settings[_size_weight_height] | strip_newlines | replace: ' ', "" | split: '|'
+        assign spacing_transform_style = settings[_spacing_transform_style] | strip_newlines | replace: ' ', "" | split: '|'
+        assign sizes = size_weight_height[0] | split: '/'
+        assign weight = size_weight_height[1] | split: '/'
+        assign height = size_weight_height[2] | split: '/'
+        assign spacing = spacing_transform_style[0] | split: '/'
+        assign transform = spacing_transform_style[1] | split: '/'
+        assign style = spacing_transform_style[2] | split: '/'
+        assign opacity = size_weight_height[3] | split: '/'
+
+        assign fallback_families = 'sans-serif'
+
+        if font_family == 'sans-serif' or font_family == 'inherit'
+          assign font_family = settings.font_custom_family_1 | default: settings.font_family_1.family
+        endif
+
+        for i in (1..5)
+          assign _font_family = 'font_family_' | append: i
+          if font_family == settings[_font_family].family
+            assign fallback_families = settings[_font_family].fallback_families
+            break
+          endif
+        endfor
+      %}
+
+      .font-group-{{ index }} {
+      {% if font_family contains " " %}
+        --font-{{ tag }}-family: {{ font_family | replace: "'", '' | replace: '"', '' | prepend: "'" | append: "'" }}, {{ fallback_families }};
+      {% else %}
+        --font-{{ tag }}-family: {{ font_family }}, {{ fallback_families }};
+      {% endif %}
+      --font-{{ tag }}-size: {{ sizes | first }};
+      --font-{{ tag }}-size-sm: {{ sizes | last }};
+      --font-{{ tag }}-weight: {{ weight | first }};
+      --font-{{ tag }}-weight-sm: {{ weight | last }};
+      --font-{{ tag }}-height: {{ height | first }};
+      --font-{{ tag }}-height-sm: {{ height | last }};
+      --font-{{ tag }}-spacing: {{ spacing | first }};
+      --font-{{ tag }}-spacing-sm: {{ spacing | last }};
+      --font-{{ tag }}-transform: {{ transform | first }};
+      --font-{{ tag }}-transform-sm: {{ transform | last }};
+      --font-{{ tag }}-style: {{ style | first }};
+      --font-{{ tag }}-style-sm: {{ style | last }};
+      --font-{{ tag }}-opacity: {{ opacity | first }};
+      --font-{{ tag }}-opacity-sm: {{ opacity | last }};
+      }
+      {% if tag == "p" and index == 1 %}
+        body {
+        font-family: {{ font_family | replace: "'", '' | replace: '"', '' | prepend: "'" | append: "'" }}, {{ fallback_families }};
+        }
+      {% endif %}
+    {% endfor %}
+
+  {% endfor %}
+  {% render 'custom-fonts.css' %}
+{% endif %}
+
+{% comment %}
+
+COLORS
+
+{% endcomment %}
+{% if settings %}
+  {% for theme in settings.color_schemes %}
+    {% liquid
+      assign group_name = "group_" | append: i
+      assign group_class_name = theme
+      assign color_text = "text"
+      assign color_overlay_text = "overlay_text"
+      assign color_bg = "bg"
+      assign color_bg_gradient = "bg_gradient"
+
+      assign color_primary_text = "primary_text"
+      assign color_primary_bg = "primary_bg"
+      assign color_primary_bg_gradient = "primary_bg_gradient"
+      assign color_primary_outline = "primary_outline"
+
+      assign color_primary_bg_lightnes = theme.settings[color_primary_bg].lightness
+
+      if color_primary_bg_lightnes >= 50
+        assign color_primary_bg_hover = theme.settings[color_primary_bg] | color_darken: 15
+      else
+        assign color_primary_bg_hover = theme.settings[color_primary_bg] | color_lighten: 15
+      endif
+
+      assign color_primary_outline_lightnes = theme.settings[color_primary_outline].lightness
+
+      if color_primary_outline_lightnes >= 50
+        assign color_primary_outline_hover = theme.settings[color_primary_outline] | color_darken: 15
+      else
+        assign color_primary_outline_hover = theme.settings[color_primary_outline] | color_lighten: 15
+      endif
+
+
+      assign color_secondary_text = "secondary_text"
+      assign color_secondary_bg = "secondary_bg"
+      assign color_secondary_bg_gradient = "secondary_bg_gradient"
+      assign color_secondary_outline = "secondary_outline"
+
+      assign color_secondary_bg_lightnes = theme.settings[color_secondary_bg].lightness
+
+      if color_secondary_bg_lightnes >= 50
+        assign color_secondary_bg_hover = theme.settings[color_secondary_bg] | color_darken: 10
+      else
+        assign color_secondary_bg_hover = theme.settings[color_secondary_bg] | color_lighten: 10
+      endif
+
+      assign color_secondary_outline_lightnes = theme.settings[color_secondary_outline].lightness
+
+      if color_secondary_outline_lightnes >= 50
+        assign color_secondary_outline_hover = theme.settings[color_secondary_outline] | color_darken: 10
+      else
+        assign color_secondary_outline_hover = theme.settings[color_secondary_outline] | color_lighten: 10
+      endif
+
+
+      assign rounded_primary = "rounded_" | append: i | append: "_primary"
+      assign rounded_secondary = "rounded_" | append: i | append: "_secondary"
+
+
+    %}
+
+    .{{ theme }} {
+    --tw-text-opacity: 1;
+    color: rgb(var(--color-text) / var(--tw-text-opacity));
+    --tw-bg-opacity: 1;
+    background-color: rgb(var(--color-bg) / var(--tw-bg-opacity));
+    --color-text--rgb: {%- render '_color-extract', color: theme.settings[color_text] -%};
+    --color-text--hex: {{ theme.settings[color_text] }};
+    --color-text: var(--color-text--rgb, {{ theme.settings[color_text] }});
+    --color-overlay-text--rgb: {%- render '_color-extract', color: theme.settings[color_overlay_text] -%};
+    --color-overlay-text--hex: {{ theme.settings[color_overlay_text] }};
+    --color-overlay-text: var(--color-overlay-text--rgb, {{ theme.settings[color_overlay_text] }});
+    --color-bg--rgb: {%- render '_color-extract', color: theme.settings[color_bg] -%};
+    --color-bg--hex: {{ theme.settings[color_bg] }};
+    --color-bg: var(--color-bg--rgb, {{ theme.settings[color_bg] }});
+    --color-bg-gradient: {{ theme.settings[color_bg_gradient] }};
+    --color-primary-text--rgb: {%- render '_color-extract', color: theme.settings[color_primary_text] -%};
+    --color-primary-text--hex: {{ theme.settings[color_primary_text] }};
+    --color-primary-text: var(--color-primary-text--rgb, {{ theme.settings[color_primary_text] }});
+    --color-primary-bg--rgb: {%- render '_color-extract', color: theme.settings[color_primary_bg] -%};
+    --color-primary-bg--hex: {{ theme.settings[color_primary_bg] }};
+    --color-primary-bg: var(--color-primary-bg--rgb, {{ theme.settings[color_primary_bg] }});
+    --color-primary-bg-gradient: {{ theme.settings[color_primary_bg_gradient] }};
+    --color-primary-outline--rgb: {%- render '_color-extract', color: theme.settings[color_primary_outline] -%};
+    --color-primary-outline--hex: {{ theme.settings[color_primary_outline] }};
+    --color-primary-outline: var(--color-primary-outline--rgb, {{ theme.settings[color_primary_outline] }});
+
+    --color-primary-bg--hover--rgb: {%- render '_color-extract', color: color_primary_bg_hover -%};
+    --color-primary-bg--hover--hex: {{ color_primary_bg_hover }};
+    --color-primary-bg--hover: var(--color-primary-bg--hover--rgb, {{ color_primary_bg_hover }});
+
+    --color-primary-outline--hover--rgb: {%- render '_color-extract', color: color_primary_outline_hover -%};
+    --color-primary-outline--hover--hex: {{ color_primary_outline_hover }};
+    --color-primary-outline--hover: var(--color-primary-outline--hover--rgb, {{ color_primary_outline_hover }});
+
+    --color-secondary-text--rgb: {%- render '_color-extract', color: theme.settings[color_secondary_text] -%};
+    --color-secondary-text--hex: {{ theme.settings[color_secondary_text] }};
+    --color-secondary-text: var(--color-secondary-text--rgb, {{ theme.settings[color_secondary_text] }});
+    --color-secondary-bg--rgb: {%- render '_color-extract', color: theme.settings[color_secondary_bg] -%};
+    --color-secondary-bg--hex: {{ theme.settings[color_secondary_bg] }};
+    --color-secondary-bg: var(--color-secondary-bg--rgb, {{ theme.settings[color_secondary_bg] }});
+    --color-secondary-bg-gradient: {{ theme.settings[color_secondary_bg_gradient] }};
+    --color-secondary-outline--rgb: {%- render '_color-extract', color: theme.settings[color_secondary_outline] -%};
+    --color-secondary-outline--hex: {{ theme.settings[color_secondary_outline] }};
+    --color-secondary-outline: var(--color-secondary-outline--rgb, {{ theme.settings[color_secondary_outline] }});
+
+    --color-secondary-bg--hover--rgb: {%- render '_color-extract', color: color_secondary_bg_hover -%};
+    --color-secondary-bg--hover--hex: {{ color_secondary_bg_hover }};
+    --color-secondary-bg--hover: var(--color-secondary-bg--hover--rgb, {{ color_secondary_bg_hover }});
+
+    --color-secondary-outline--hover--rgb: {%- render '_color-extract', color: color_secondary_outline_hover -%};
+    --color-secondary-outline--hover--hex: {{ color_secondary_outline_hover }};
+    --color-secondary-outline--hover: var(--color-secondary-outline--hover--rgb, {{ color_secondary_outline_hover }});
+
+    }
+
+    {%- if settings.color_scheme == group_class_name -%}
+      :root {
+      --color-text--rgb: {%- render '_color-extract', color: theme.settings[color_text] -%};
+      --color-text--hex: {{ theme.settings[color_text] }};
+      --color-text: var(--color-text--rgb, {{ theme.settings[color_text] }});
+      --color-overlay-text--rgb: {%- render '_color-extract', color: theme.settings[color_overlay_text] -%};
+      --color-overlay-text--hex: {{ theme.settings[color_overlay_text] }};
+      --color-overlay-text: var(--color-overlay-text--rgb, {{ theme.settings[color_overlay_text] }});
+      --color-bg--rgb: {%- render '_color-extract', color: theme.settings[color_bg] -%};
+      --color-bg--hex: {{ theme.settings[color_bg] }};
+      --color-bg: var(--color-bg--rgb, {{ theme.settings[color_bg] }});
+      --color-bg-gradient: {{ theme.settings[color_bg_gradient] }};
+      --color-primary-text--rgb: {%- render '_color-extract', color: theme.settings[color_primary_text] -%};
+      --color-primary-text--hex: {{ theme.settings[color_primary_text] }};
+      --color-primary-text: var(--color-primary-text--rgb, {{ theme.settings[color_primary_text] }});
+      --color-primary-bg--rgb: {%- render '_color-extract', color: theme.settings[color_primary_bg] -%};
+      --color-primary-bg--hex: {{ theme.settings[color_primary_bg] }};
+      --color-primary-bg: var(--color-primary-bg--rgb, {{ theme.settings[color_primary_bg] }});
+      --color-primary-bg-gradient: {{ theme.settings[color_primary_bg_gradient] }};
+      --color-primary-outline--rgb: {%- render '_color-extract', color: theme.settings[color_primary_outline] -%};
+      --color-primary-outline--hex: {{ theme.settings[color_primary_outline] }};
+      --color-primary-outline: var(--color-primary-outline--rgb, {{ theme.settings[color_primary_outline] }});
+
+      --color-primary-bg--hover--rgb: {%- render '_color-extract', color: color_primary_bg_hover -%};
+      --color-primary-bg--hover--hex: {{ color_primary_bg_hover }};
+      --color-primary-bg--hover: var(--color-primary-bg--hover--rgb, {{ color_primary_bg_hover }});
+
+      --color-primary-outline--hover--rgb: {%- render '_color-extract', color: color_primary_outline_hover -%};
+      --color-primary-outline--hover--hex: {{ color_primary_outline_hover }};
+      --color-primary-outline--hover: var(--color-primary-outline--hover--rgb, {{ color_primary_outline_hover }});
+
+      --color-secondary-text--rgb: {%- render '_color-extract', color: theme.settings[color_secondary_text] -%};
+      --color-secondary-text--hex: {{ theme.settings[color_secondary_text] }};
+      --color-secondary-text: var(--color-secondary-text--rgb, {{ theme.settings[color_secondary_text] }});
+      --color-secondary-bg--rgb: {%- render '_color-extract', color: theme.settings[color_secondary_bg] -%};
+      --color-secondary-bg--hex: {{ theme.settings[color_secondary_bg] }};
+      --color-secondary-bg: var(--color-secondary-bg--rgb, {{ theme.settings[color_secondary_bg] }});
+      --color-secondary-bg-gradient: {{ theme.settings[color_secondary_bg_gradient] }};
+      --color-secondary-outline--rgb: {%- render '_color-extract', color: theme.settings[color_secondary_outline] -%};
+      --color-secondary-outline--hex: {{ theme.settings[color_secondary_outline] }};
+      --color-secondary-outline: var(--color-secondary-outline--rgb, {{ theme.settings[color_secondary_outline] }});
+
+      --color-secondary-bg--hover--rgb: {%- render '_color-extract', color: color_secondary_bg_hover -%};
+      --color-secondary-bg--hover--hex: {{ color_secondary_bg_hover }};
+      --color-secondary-bg--hover: var(--color-secondary-bg--hover--rgb, {{ color_secondary_bg_hover }});
+
+      --color-secondary-outline--hover--rgb: {%- render '_color-extract', color: color_secondary_outline_hover -%};
+      --color-secondary-outline--hover--hex: {{ color_secondary_outline_hover }};
+      --color-secondary-outline--hover: var(--color-secondary-outline--hover--rgb, {{ color_secondary_outline_hover }});
+
+      }
+
+    {%- endif -%}
+  {%- endfor -%}
+  :root {
+  --color-error--rgb: {%- render '_color-extract', color: settings.color_error -%};
+  --color-error--hex: {{ settings.color_error }};
+  --color-error: var(--color-error--rgb, {{ settings.color_error }});
+  --color-warning--rgb: {%- render '_color-extract', color: settings.color_warning -%};
+  --color-warning--hex: {{ settings.color_warning }};
+  --color-warning: var(--color-warning--rgb, {{ settings.color_warning }});
+  --color-success--rgb: {%- render '_color-extract', color: settings.color_success -%};
+  --color-success--hex: {{ settings.color_success }};
+  --color-success: var(--color-success--rgb, {{ settings.color_success }});
+  --color-info--rgb: {%- render '_color-extract', color: settings.color_info -%};
+  --color-info--hex: {{ settings.color_info }};
+  --color-info: var(--color-info--rgb, {{ settings.color_info }});
+  --color-review-stars--rgb: {%- render '_color-extract', color: settings.color_review_stars -%};
+  --color-review-stars--hex: {{ settings.color_review_stars }};
+  --color-review-stars: var(--color-review-stars--rgb, {{ settings.color_review_stars }});
+  }
+
+  {% assign grayScales = "slate,gray,zinc,neutral,stone" | split: ',' %}
+
+  {% for grayScale in grayScales %}
+    {% case grayScale %}
+      {% when 'slate' %}
+
+        .gray-slate {
+        --color-gray-50: 248 250 252;
+        --color-gray-100: 241 245 249;
+        --color-gray-200: 226 232 240;
+        --color-gray-300: 203 213 225;
+        --color-gray-400: 148 163 184;
+        --color-gray-500: 100 116 139;
+        --color-gray-600: 71 85 105;
+        --color-gray-700: 51 65 85;
+        --color-gray-800: 30 41 59;
+        --color-gray-900: 15 23 42;
+        }
+
+        .gray-slate--inverted {
+        --color-gray-50: 15 23 42;
+        --color-gray-100: 30 41 59;
+        --color-gray-200: 51 65 85;
+        --color-gray-300: 71 85 105;
+        --color-gray-400: 100 116 139;
+        --color-gray-500: 148 163 184;
+        --color-gray-600: 203 213 225;
+        --color-gray-700: 226 232 240;
+        --color-gray-800: 241 245 249;
+        --color-gray-900: 248 250 252;
+        }
+
+      {% when 'gray' %}
+
+        .gray-gray {
+        --color-gray-50: 249 250 251;
+        --color-gray-100: 243 244 246;
+        --color-gray-200: 229 231 235;
+        --color-gray-300: 209 213 219;
+        --color-gray-400: 156 163 175;
+        --color-gray-500: 107 114 128;
+        --color-gray-600: 75 85 99;
+        --color-gray-700: 55 65 81;
+        --color-gray-800: 31 41 55;
+        --color-gray-900: 17 24 39;
+        }
+
+        .gray-gray--inverted {
+        --color-gray-50: 17 24 39;
+        --color-gray-100: 31 41 55;
+        --color-gray-200: 55 65 81;
+        --color-gray-300: 75 85 99;
+        --color-gray-400: 107 114 128;
+        --color-gray-500: 156 163 175;
+        --color-gray-600: 209 213 219;
+        --color-gray-700: 229 231 235;
+        --color-gray-800: 243 244 246;
+        --color-gray-900: 249 250 251;
+        }
+
+      {% when 'zinc' %}
+
+        .gray-zinc {
+        --color-gray-50: 250 250 250;
+        --color-gray-100: 244 244 245;
+        --color-gray-200: 228 228 231;
+        --color-gray-300: 212 212 216;
+        --color-gray-400: 161 161 170;
+        --color-gray-500: 113 113 122;
+        --color-gray-600: 82 82 91;
+        --color-gray-700: 63 63 70;
+        --color-gray-800: 39 39 42;
+        --color-gray-900: 24 24 27;
+        }
+
+        .gray-zinc--inverted {
+        --color-gray-50: 24 24 27;
+        --color-gray-100: 39 39 42;
+        --color-gray-200: 63 63 70;
+        --color-gray-300: 82 82 91;
+        --color-gray-400: 113 113 122;
+        --color-gray-500: 161 161 170;
+        --color-gray-600: 212 212 216;
+        --color-gray-700: 228 228 231;
+        --color-gray-800: 244 244 245;
+        --color-gray-900: 250 250 250;
+        }
+
+      {% when 'neutral' %}
+
+        .gray-neutral {
+        --color-gray-50: 250 250 250;
+        --color-gray-100: 245 245 245;
+        --color-gray-200: 229 229 229;
+        --color-gray-300: 212 212 212;
+        --color-gray-400: 163 163 163;
+        --color-gray-500: 115 115 115;
+        --color-gray-600: 82 82 82;
+        --color-gray-700: 64 64 64;
+        --color-gray-800: 38 38 38;
+        --color-gray-900: 23 23 23;
+        }
+
+        .gray-neutral--inverted {
+        --color-gray-50: 23 23 23;
+        --color-gray-100: 38 38 38;
+        --color-gray-200: 64 64 64;
+        --color-gray-300: 82 82 82;
+        --color-gray-400: 115 115 115;
+        --color-gray-500: 163 163 163;
+        --color-gray-600: 212 212 212;
+        --color-gray-700: 229 229 229;
+        --color-gray-800: 245 245 245;
+        --color-gray-900: 250 250 250;
+        }
+
+      {% when 'stone' %}
+
+        .gray-stone {
+        --color-gray-50: 250 250 249;
+        --color-gray-100: 245 245 244;
+        --color-gray-200: 231 229 228;
+        --color-gray-300: 214 211 209;
+        --color-gray-400: 168 162 158;
+        --color-gray-500: 120 113 108;
+        --color-gray-600: 87 83 78;
+        --color-gray-700: 68 64 60;
+        --color-gray-800: 41 37 36;
+        --color-gray-900: 28 25 23;
+        }
+
+        .gray-stone--inverted {
+        --color-gray-50: 28 25 23;
+        --color-gray-100: 41 37 36;
+        --color-gray-200: 68 64 60;
+        --color-gray-300: 87 83 78;
+        --color-gray-400: 120 113 108;
+        --color-gray-500: 168 162 158;
+        --color-gray-600: 214 211 209;
+        --color-gray-700: 231 229 228;
+        --color-gray-800: 245 245 244;
+        --color-gray-900: 250 250 249;
+        }
+
+    {% endcase %}
+  {% endfor %}
+
+  {% if settings.color_grayscale_style == "normal" %}
+    {% case settings.color_grayscale %}
+      {% when 'slate' %}
+
+        :root {
+        --color-gray-50: 248 250 252;
+        --color-gray-100: 241 245 249;
+        --color-gray-200: 226 232 240;
+        --color-gray-300: 203 213 225;
+        --color-gray-400: 148 163 184;
+        --color-gray-500: 100 116 139;
+        --color-gray-600: 71 85 105;
+        --color-gray-700: 51 65 85;
+        --color-gray-800: 30 41 59;
+        --color-gray-900: 15 23 42;
+        }
+
+      {% when 'gray' %}
+
+        :root {
+        --color-gray-50: 249 250 251;
+        --color-gray-100: 243 244 246;
+        --color-gray-200: 229 231 235;
+        --color-gray-300: 209 213 219;
+        --color-gray-400: 156 163 175;
+        --color-gray-500: 107 114 128;
+        --color-gray-600: 75 85 99;
+        --color-gray-700: 55 65 81;
+        --color-gray-800: 31 41 55;
+        --color-gray-900: 17 24 39;
+        }
+
+      {% when 'zinc' %}
+
+        :root {
+        --color-gray-50: 250 250 250;
+        --color-gray-100: 244 244 245;
+        --color-gray-200: 228 228 231;
+        --color-gray-300: 212 212 216;
+        --color-gray-400: 161 161 170;
+        --color-gray-500: 113 113 122;
+        --color-gray-600: 82 82 91;
+        --color-gray-700: 63 63 70;
+        --color-gray-800: 39 39 42;
+        --color-gray-900: 24 24 27;
+        }
+
+      {% when 'neutral' %}
+
+        :root {
+        --color-gray-50: 250 250 250;
+        --color-gray-100: 245 245 245;
+        --color-gray-200: 229 229 229;
+        --color-gray-300: 212 212 212;
+        --color-gray-400: 163 163 163;
+        --color-gray-500: 115 115 115;
+        --color-gray-600: 82 82 82;
+        --color-gray-700: 64 64 64;
+        --color-gray-800: 38 38 38;
+        --color-gray-900: 23 23 23;
+        }
+
+      {% when 'stone' %}
+
+        :root {
+        --color-gray-50: 250 250 249;
+        --color-gray-100: 245 245 244;
+        --color-gray-200: 231 229 228;
+        --color-gray-300: 214 211 209;
+        --color-gray-400: 168 162 158;
+        --color-gray-500: 120 113 108;
+        --color-gray-600: 87 83 78;
+        --color-gray-700: 68 64 60;
+        --color-gray-800: 41 37 36;
+        --color-gray-900: 28 25 23;
+        }
+
+    {% endcase %}
+  {% endif %}
+
+  {% if settings.color_grayscale_style == "inverted" %}
+    {% case settings.color_grayscale %}
+      {% when 'slate' %}
+
+        :root {
+        --color-gray-50: 15 23 42;
+        --color-gray-100: 30 41 59;
+        --color-gray-200: 51 65 85;
+        --color-gray-300: 71 85 105;
+        --color-gray-400: 100 116 139;
+        --color-gray-500: 148 163 184;
+        --color-gray-600: 203 213 225;
+        --color-gray-700: 226 232 240;
+        --color-gray-800: 241 245 249;
+        --color-gray-900: 248 250 252;
+        }
+
+      {% when 'gray' %}
+
+        :root {
+        --color-gray-50: 17 24 39;
+        --color-gray-100: 31 41 55;
+        --color-gray-200: 55 65 81;
+        --color-gray-300: 75 85 99;
+        --color-gray-400: 107 114 128;
+        --color-gray-500: 156 163 175;
+        --color-gray-600: 209 213 219;
+        --color-gray-700: 229 231 235;
+        --color-gray-800: 243 244 246;
+        --color-gray-900: 249 250 251;
+        }
+
+      {% when 'zinc' %}
+
+        :root {
+        --color-gray-50: 24 24 27;
+        --color-gray-100: 39 39 42;
+        --color-gray-200: 63 63 70;
+        --color-gray-300: 82 82 91;
+        --color-gray-400: 113 113 122;
+        --color-gray-500: 161 161 170;
+        --color-gray-600: 212 212 216;
+        --color-gray-700: 228 228 231;
+        --color-gray-800: 244 244 245;
+        --color-gray-900: 250 250 250;
+        }
+
+      {% when 'neutral' %}
+
+        :root {
+        --color-gray-50: 23 23 23;
+        --color-gray-100: 38 38 38;
+        --color-gray-200: 64 64 64;
+        --color-gray-300: 82 82 82;
+        --color-gray-400: 115 115 115;
+        --color-gray-500: 163 163 163;
+        --color-gray-600: 212 212 212;
+        --color-gray-700: 229 229 229;
+        --color-gray-800: 245 245 245;
+        --color-gray-900: 250 250 250;
+        }
+
+      {% when 'stone' %}
+
+        :root {
+        --color-gray-50: 28 25 23;
+        --color-gray-100: 41 37 36;
+        --color-gray-200: 68 64 60;
+        --color-gray-300: 87 83 78;
+        --color-gray-400: 120 113 108;
+        --color-gray-500: 168 162 158;
+        --color-gray-600: 214 211 209;
+        --color-gray-700: 231 229 228;
+        --color-gray-800: 245 245 244;
+        --color-gray-900: 250 250 249;
+        }
+
+    {% endcase %}
+  {% endif %}
+{% endif %}
+
+{% comment %}
+
+LAYOUT
+
+{% endcomment %}
+{% if settings %}
+  {% assign container_width = settings.layout_page_width | append: "px" %}
+  {% if settings.layout_is_fullwidth %}
+    {% assign container_width = '100%' %}
+  {% endif %}
+
+  :root {
+  --layout-page-width: {{ container_width }};
+  --section-padding-sm: {{ settings.layout_section_padding_sm }}px;
+  --section-padding-md: {{ settings.layout_section_padding_md }}px;
+  --section-padding-lg: {{ settings.layout_section_padding_lg }}px;
+  }
+  @media (max-width: 768px) {
+  :root {
+  --section-padding-sm: {{ settings.layout_section_padding_sm__mobile }}px;
+  --section-padding-md: {{ settings.layout_section_padding_md__mobile }}px;
+  --section-padding-lg: {{ settings.layout_section_padding_lg__mobile }}px;
+  }
+  }
+
+{% endif %}
+
+{% comment %} ROUNDED {% endcomment %}
+{% if settings %}
+  {% case settings.design_border_radius %}
+    {% when 'soft' %}
+      :root {
+      --rounded-theme-sm: calc(.125rem * 1.25);
+      --rounded-theme: calc(.25rem * 1.25);
+      --rounded-theme-md: calc(.375rem * 1.25);
+      --rounded-theme-lg: calc(.5rem * 1.25);
+      --rounded-theme-xl: calc(.75rem * 1.25);
+      --rounded-theme-2xl: calc(1rem * 1.25);
+      --rounded-theme-3xl: calc(1.5rem * 1.25);
+      }
+    {% when 'medium' %}
+      :root {
+      --rounded-theme-sm: .125rem;
+      --rounded-theme: .25rem;
+      --rounded-theme-md: .375rem;
+      --rounded-theme-lg: .5rem;
+      --rounded-theme-xl: .75rem;
+      --rounded-theme-2xl: 1rem;
+      --rounded-theme-3xl: 1.5rem;
+      }
+    {% when 'bold' %}
+      :root {
+      --rounded-theme-sm: 0;
+      --rounded-theme: 0;
+      --rounded-theme-md: 0;
+      --rounded-theme-lg: 0;
+      --rounded-theme-xl: 0;
+      --rounded-theme-2xl: 0;
+      --rounded-theme-3xl: 0;
+      }
+  {% endcase %}
+
+{% endif %}

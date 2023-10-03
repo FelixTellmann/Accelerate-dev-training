@@ -1,0 +1,49 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign image = block.settings.image
+  assign title = block.settings.title
+  assign title_font = block.settings.title_font
+  assign content = block.settings.content
+  assign content_font = block.settings.content_font
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% case type %}
+  {% when 'image-mobile-content' %}
+    <figure class="relative grid transition-all ease-in-out snap-start min-w-full md:min-w-full snap-always"
+            data-scroll-item>
+      <picture class="block relative pb-[100%] w-full overflow-hidden rounded-theme-md">
+        {% if image == blank %}
+          {% assign number = forloop.index | modulo: 6 | plus: 1 %}
+          {% assign placeholderImage = 'collection-' | append: number %}
+        {% endif %}
+        {% render '_image', image: image, class: "absolute top-0 left-0 h-full w-full bg-inherit object-cover", placeholder: placeholderImage %}
+      </picture>
+      <figcaption class="lg:hidden text-center mt-4 overflow-hidden">
+        {% render 'richtext', type: title_font, content: title %}
+        {% render 'richtext', type: content_font, content: content %}
+      </figcaption>
+    </figure>
+
+  {% when 'desktop-text-content' %}
+    <button class="group h-min ml-10 opacity-50 text-left ac:opacity-100 transition-all duration-75 {% if forloop.first %}active{% endif %}"
+            type="button"
+            data-scroll-tab-button="{{ forloop.index0 }}">
+ 
+      <div class="relative mb-2">
+        {% render '_icon', icon: 'triangle', class: "w-7 h-7 opacity-0 group-hf:opacity-20 group-ac:opacity-100 absolute -left-4 -translate-x-full top-1/2 -translate-y-1/2 text-secondary-outline" %}
+        {% render 'richtext', type: title_font, content: title %}
+      </div>
+      {% render 'richtext', type: content_font, content: content %}
+    </button>
+
+  {% when 'scroll-tab-button' %}
+    <button class="group p-2 flex opacity-50 hf:opacity-70 ac:opacity-100 {% if forloop.first %}active{% endif %}"
+            type="button"
+            data-scroll-tab-button="{{ forloop.index0 }}">
+      <span class="rounded-theme-sm h-1 w-10 bg-theme-text/70 flex group-hf:bg-theme-text transition-all duration-75"></span>
+      <span class="sr-only">
+        <t>Select tab</t> {{ forloop.index }}
+      </span>
+    </button>
+{% endcase %}

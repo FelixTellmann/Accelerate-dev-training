@@ -1,0 +1,87 @@
+{%- comment -%} Auto Generated Variables start {%- endcomment -%}
+{%- liquid
+  assign title = section.settings.title
+  assign title_font = section.settings.title_font
+  assign review_font = section.settings.review_font
+  assign author_font = section.settings.author_font
+  assign auto_rotate = section.settings.auto_rotate
+  assign slide_speed = section.settings.slide_speed
+  assign min_height = section.settings.min_height
+  assign responsive_visibility = section.settings.responsive_visibility
+  assign padding_top = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign color_scheme = section.settings.color_scheme
+  assign sectionID = section.settings.sectionID
+-%}
+{%- comment -%} Auto Generated Variables end {%- endcomment -%}
+
+{% liquid
+  if min_height == 0
+    assign min_height = "unset"
+  else
+    assign min_height = min_height | append: "px"
+  endif
+
+%}
+<div id="{{ sectionID }}"
+     class="testimonials container-bg-full {{ responsive_visibility }} {{ padding_top }} {{ padding_bottom }} {{ color_scheme }} grid lg:grid-cols-[300px_1fr] gap-6">
+  <header>
+    {% render 'richtext', type: title_font, content: title %}
+  </header>
+  <section class="relative overflow-hidden pb-10"
+           data-slideshow-new="{{ section.id }}"
+           data-slideshow-auto-rotate="{{ auto_rotate }}"
+           data-slideshow-slide-duration="{{ slide_speed }}"
+           style="--min-h:{{ min_height }}px; --min-h-mobile:{{ min_height_mobile }}px;">
+    <div class="snap-mandatory snap-x grid relative min-h-[var(--min-h-mobile)] md:min-h-[var(--min-h)] overflow-x-auto scrollbar-none"
+         data-slideshow-container
+         style="grid-template-columns: repeat({{ section.blocks.size }}, 100%); ">
+      {% liquid
+        for block in section.blocks
+          render 'testimonials.review', block: block, forloop: forloop
+        endfor
+      %}
+    </div>
+
+    <div class="absolute bottom-0 left-0 h-min items-end justify-center z-10 grid grid-flow-col-dense auto-cols-min gap-3 text-theme-text">
+      {% if section.blocks.size > 1 %}
+        {% for block in section.blocks %}
+          {% liquid
+            assign block_slide = block.settings.slide
+            assign block_slide_speed = block.settings.slide_speed
+          %}
+          <button type="button"
+                  class="group -m-1 p-1 {% if first and auto_rotate %}active{% endif %} {{ block.settings.responsive_visibility }}"
+                  data-slideshow-slide-duration="{% if block_slide %}{{ block_slide_speed }}{% else %}{{ slide_speed }}{% endif %}"
+                  data-slideshow-button="{{ forloop.index0 }}">
+            <span class="sr-only">View Review {{ forloop.index }}</span>
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 class="w-3 h-3"
+                 viewBox="0 0 30 30"
+                 xml:space="preserve">
+            <circle cx="15"
+                    cy="15"
+                    r="13"
+                    fill="currentColor"
+                    stroke-width="4"
+                    stroke-dasharray="90"
+                    class="{% if auto_rotate %}group-ac:animate-dot{% else %}group-ac:opacity-100 opacity-[0.72]{% endif %} -rotate-90 origin-center"
+                    style="animation-duration: {% if block_slide %}{{ block_slide_speed }}{% else %}{{ slide_speed }}{% endif %}s">
+            </circle>
+              <circle cx="15"
+                      cy="15"
+                      r="13"
+                      fill="transparent"
+                      stroke="currentColor"
+                      stroke-width="4"
+                      stroke-dasharray="90"
+                      class="{% if auto_rotate %}group-ac:animate-circle{% endif %} -rotate-90 origin-center"
+                      style="animation-duration: {% if block_slide %}{{ block_slide_speed }}{% else %}{{ slide_speed }}{% endif %}s">
+              </circle>
+            </svg>
+          </button>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </section>
+</div>

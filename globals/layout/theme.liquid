@@ -1,0 +1,218 @@
+<!doctype html>
+<html class="no-js"
+      lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible"
+        content="IE=edge">
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color"
+        content="{{ settings.color_1_bg }}">
+  <link rel="canonical"
+        href="{{ canonical_url }}">
+  <link rel="preconnect"
+        href="https://cdn.shopify.com"
+        crossorigin>
+  <link rel="preload"
+        as="style"
+        href="{{ 'tailwind.css' | asset_url }}">
+  <link rel="preload"
+        as="style"
+        href="{{ 'custom.css' | asset_url }}">
+  <link rel="preload"
+        as="script"
+        href="{{ 'theme.js' | asset_url }}">
+  <link rel="preload"
+        as="script"
+        href="{{ 'custom.js' | asset_url }}">
+  {% if request.design_mode %}
+    <link rel="preload"
+          as="script"
+          href="{{ 'editor.js' | asset_url }}">
+  {% endif %}
+
+  {%- if settings.branding_favicon != blank -%}
+    <link rel="icon"
+          type="image/png"
+          href="{{ settings.branding_favicon | image_url: width: 32, height: 32 }}">
+  {%- endif -%}
+
+  {% capture defaultTitle %}
+    {{ page_title }}
+    {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+    {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+    {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+  {% endcapture %}
+  <title>
+    {{ defaultTitle }}
+  </title>
+  {% if page_description %}
+    <meta name="description"
+          content="{{ page_description | escape }}">
+  {% else %}
+    <meta name="description"
+          content="{{ defaultTitle | escape }}">
+  {% endif %}
+
+  {% render 'meta-tags' %}
+  {% render '_translations' %}
+
+  {{ content_for_header }}
+
+  <script>
+    window['missingImageAltTags'] = [];
+  </script>
+  <link rel="stylesheet"
+        href="{{ 'tailwind.css' | asset_url }}">
+  <link rel="stylesheet"
+        href="{{ 'custom.css' | asset_url }}">
+  <script type="module"
+          src="{{ 'theme.js' | asset_url }}"
+          defer></script>
+  <script type="module"
+          src="{{ 'custom.js' | asset_url }}"
+          defer></script>
+
+  {% if request.design_mode %}
+    <script type="module"
+            src="{{ 'editor.js' | asset_url }}"
+            defer></script>
+  {% endif %}
+
+  <script type="application/json"
+          data-color-swatches>{% render 'color-swatches.json' %}</script>
+
+  {% for index in (1..5) %}
+    {% liquid
+      assign _font_family = 'font_family_' | append: index
+      assign _font_weights = 'font_weights_' | append: index
+      assign _font_custom_family = 'font_custom_family_' | append: index
+      assign _font_custom_src = 'font_custom_src_' | append: index
+    %}
+
+    {% if settings[_font_custom_src] != blank %}
+      {{ settings[_font_custom_src] }}
+    {% endif %}
+
+    {%- if settings[_font_custom_family] == blank and settings[_font_family].system? != true and settings[_font_family] != blank -%}
+      <link rel="preload"
+            as="font"
+            href="{{ settings[_font_family] | font_url }}"
+            type="font/woff2"
+            crossorigin>
+    {%- endif -%}
+  {% endfor %}
+
+
+  {% capture globalStyles %}
+    {% render '_settings' %}
+  {% endcapture %}
+  <style>
+    {{ globalStyles | strip_newlines  }}
+    {% render '_font_variables', id: 'product_card__title__font', settings: settings, selector: 'product-card-title', no_style: true %}
+    {% render '_font_variables', id: 'product_price', settings: settings, selector: 'product-price', no_style: true %}
+    {% render '_font_variables', id: 'small_product_card__title__font', settings: settings, selector: 'product-card-title--small', no_style: true %}
+    {% render '_font_variables', id: 'article_card_title', settings: settings, selector: 'article-card-title', no_style: true %}
+    {% render '_font_variables', id: 'article_card_specs', settings: settings, selector: 'article-card-specs', no_style: true %}
+    {% render '_font_variables', id: 'article_card_description', settings: settings, selector: 'article-card-description', no_style: true %}
+    {% render '_font_variables', id: 'article_card_link', settings: settings, selector: 'article-card-link', no_style: true %}
+    {% render '_font_variables', id: 'cart_title', settings: settings, selector: 'cart-title', no_style: true %}
+    {% render '_font_variables', id: 'breadcrumbs', settings: settings, selector: 'breadcrumbs', no_style: true %}
+
+    {% render '_font_variables', id: 'nav_link', settings: settings, selector: 'nav-link', no_style: true %}
+    {% render '_font_variables', id: 'megamenu_title', settings: settings, selector: 'megamenu-title', no_style: true %}
+    {% render '_font_variables', id: 'megamenu_link', settings: settings, selector: 'megamenu-link', no_style: true %}
+    {% render '_font_variables', id: 'megamenu_link_large', settings: settings, selector: 'megamenu-link--large', no_style: true %}
+    {% render '_font_variables', id: 'megamenu_image_caption', settings: settings, selector: 'megamenu-image-caption', no_style: true %}
+
+    {% render '_font_variables', id: 'footer_title', settings: settings, selector: 'footer-title', no_style: true %}
+    {% render '_font_variables', id: 'footer_link', settings: settings, selector: 'footer-link', no_style: true %}
+
+    {% render '_button_styling', id: 'button_lg', settings: settings, selector: 'button--lg', no_style: true %}
+    {% render '_button_styling', id: 'button_md', settings: settings, selector: 'button--md', no_style: true %}
+    {% render '_button_styling', id: 'button_sm', settings: settings, selector: 'button--sm', no_style: true %}
+    {% render '_button_styling', id: 'button_extra_1', settings: settings, selector: 'button--extra-1', no_style: true %}
+    {% render '_button_styling', id: 'button_extra_2', settings: settings, selector: 'button--extra-2', no_style: true %}
+    {% render '_button_styling', id: 'button_extra_3', settings: settings, selector: 'button--extra-3', no_style: true %}
+
+    {% render '_design_element_styling', id: 'input_md', settings: settings, selector: 'text-input--md', no_style: true %}
+    {% render '_design_element_styling', id: 'select_md', settings: settings, selector: 'select-input--md', no_style: true %}
+    {% render '_design_element_styling', id: 'labels', settings: settings, selector: 'label--md', no_style: true %}
+    {% render '_button_styling', id: 'tab_md', settings: settings, selector: 'tab--md', no_style: true %}
+
+  </style>
+
+  <link rel="preconnect"
+        href="https://fonts.shopifycdn.com"
+        crossorigin>
+
+  <script>
+    document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+    if (Shopify.designMode) {
+      document.documentElement.classList.add('shopify-design-mode');
+    }
+  </script>
+  {% assign productSettingKeys = settings | where: 'product_card' %}
+
+  {%- capture filterTag -%}
+    {{- settings.custom_hide_condition -}}
+  {%- endcapture -%}
+  {% assign filterTag = filterTag | trim | strip_newlines %}
+
+  {% capture globalSettings %}
+    window.missingImageAltTags = [];
+    window.shop = {% render '_json_static-gen-sloooow', input: shop, type: 'shop' %};
+    window.routes = {
+    ...{% render '_json_static-gen-sloooow', input: routes, type: 'routes' %},
+    file_url: `{{ "" | file_url | split: "?" | first }}`,
+    asset_url: `{{ "theme.js" | asset_url | split: "theme.js?" | first }}`,
+    };
+    window.request_path = {{ request.path | json }};
+    window.template = {{ template | json }};
+    window.theme_settings = { ...{{ settings | json }}, color_schemes: [{% for theme in settings.color_schemes %}{{ theme.settings | json }}{% unless forloop.last %},{% endunless %}{% endfor %}] };
+    window.product_card_settings = {
+    {% for key in productSettingKeys %}{{ key }}: {{ settings[key] | json }}{% unless forloop.last %},{% endunless %}{% endfor %}
+    };
+    window.cartData = {{ cart | json }};
+    window.cartProductCollections = {
+    {%- for item in cart.items -%}"{{ item.product.handle }}": {{ item.product.collections | map: 'handle' | json }}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}
+    };
+
+    window.filterTag = {{ filterTag | json }} || "NOTAFilterTag";
+
+    window.transformProducts = (product) => {
+    if (product.tags.includes(window.filterTag)) {
+    return {...product, hidden: true};
+    };
+
+    return product;
+    };
+
+  {% endcapture %}
+  <script>
+    {{ globalSettings }}
+  </script>
+
+
+  {% if customer.has_account %}
+    {% case request.path %}
+      {% when '/account/register' or '/account/register' or '/account/login' %}
+        <script>
+          window.location.href = `{{ request.origin }}{{ routes.account_url }}`;
+        </script>
+    {% endcase %}
+  {% endif %}
+</head>
+
+<body class="min-h-screen text-theme-text bg-theme-bg bg-theme-gradient font-group-1 no-scroll {{ settings.color_scheme }}"
+      style="scroll-behavior:auto !important;"
+      id="shopify-override">
+  {% render "review-stars" %}
+
+  <main class="section-content min-h-full {% if template == "gift_card" %}[&_.shopify-section]:print:hidden{% endif %}">
+    {{ content_for_layout }}
+  </main>
+</body>
+</html>
+

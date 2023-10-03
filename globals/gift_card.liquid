@@ -1,0 +1,95 @@
+{% liquid
+  assign gift_card__color_scheme = settings.gift_card__color_scheme
+  assign gift_card__title = settings.gift_card__title
+  assign gift_card__title_font = settings.gift_card__title_font
+  assign gift_card__padding_top = settings.gift_card__padding_top
+  assign gift_card__padding_bottom = settings.gift_card__padding_bottom
+
+  assign gift_card_expiry_date = gift_card.expires_on | date: "%d/%m/%y"
+%}
+
+{{ 'vendor/qrcode.js' | shopify_asset_url | script_tag }}
+
+<section class="gift-card container-bg-full {{ gift_card__color_scheme }} {{ gift_card__padding_top }} {{ gift_card__padding_bottom }}">
+  <header class="py-4 text-center">
+    <picture class="relative hidden print:block mb-6">
+      {% render '_image', image: settings.branding_logo_dark_on_light, height: 160, default_alt: shop.name, class: "inline-block w-auto h-[70px] max-w-full", preload: true %}
+    </picture>
+    <h1>
+      {% render 'richtext', content: gift_card__title, type: gift_card__title_font %}
+    </h1>
+    <div class="flex justify-center gap-4 py-4 empty:hidden">
+      {% if gift_card.enabled == false %}
+        <div class="select-none border px-3 py-1 font-semibold rounded-theme-sm text-[13px] bg-theme-text/5 border-primary-bg text-theme-text/80">
+          <t>Gift Card Disabled</t>
+        </div>
+      {% endif %}
+      {% if gift_card.expired and gift_card.enabled %}
+        <div class="select-none border px-3 py-1 font-semibold rounded-theme-sm text-[13px] bg-theme-text/5 border-primary-bg text-theme-text/80">
+          <t>Expired on:</t> {{ gift_card_expiry_date }}
+        </div>
+      {% endif %}
+      {% if gift_card.expired != true and gift_card.expires_on and gift_card.enabled %}
+        <div class="select-none border px-3 py-1 font-semibold rounded-theme-sm text-[13px] bg-theme-text/5 border-primary-bg text-theme-text/80">
+          <t>Expires on:</t> {{ gift_card_expiry_date }}
+        </div>
+      {% endif %}
+    </div>
+  </header>
+  <main class="flex flex-col items-center gap-4">
+    <figure class="relative mx-auto max-w-lg print:max-w-sm">
+      <img src="{{ 'gift-card/card.jpg' | shopify_asset_url }}"
+           alt="{{ 'gift_cards.issued.subtext' | t }}">
+      <figcaption class="absolute inset-0 flex flex-col items-stretch justify-between">
+        <div class="p-4 text-right text-2xl font-bold tracking-tight text-white">
+          {% if gift_card.balance != gift_card.initial_value %}
+            <span class="line-through text-white/50 print:text-black">{{ gift_card.initial_value | money }}</span>
+          {% endif %}
+          <span class="print:text-black">{{ gift_card.balance | money }}</span>
+        </div>
+        <div class="mx-4 flex justify-center">
+          <div class="w-auto bg-white rounded-theme-sm p-2.5 mb-6">
+            <div class="p-2.5 border border-dashed border-theme-text/15 text-2xl tracking-wide font-medium">{{ gift_card.code }}</div>
+          </div>
+        </div>
+      </figcaption>
+    </figure>
+    <div class="mt-6 text-center text-lg">
+      <t>Use this code at checkout to redeem your gift card</t>
+    </div>
+    <div class="p-8 mt-6 border border-theme-text/20 rounded-theme-md"
+         data-qr-code>
+      <script>
+        new QRCode(document.querySelector('[data-qr-code]'), {
+          text: "{{ gift_card.qr_identifier }}",
+          width: 150,
+          height: 150,
+        });
+      </script>
+    </div>
+  </main>
+  <footer class="flex items-center justify-center gap-8 p-4 print:hidden mt-10">
+    <button type="button"
+            onclick="window.print();"
+            class="p-1 flex gap-2 text-theme-text/70 hf:text-theme-text transition-all duration-75">
+      {% render '_icon', icon: 'printer', class: "w-6 h-6" %}
+      <span class="">Print</span>
+    </button>
+
+    {%- if gift_card.pass_url -%}
+      <a href="{{ gift_card.pass_url }}"
+         class="relative flex items-center whitespace-nowrap">
+        <img src="{{ 'gift-card/add-to-apple-wallet.svg' | shopify_asset_url }}"
+             width="120"
+             height="40"
+             alt="Add to Apple Wallet"
+             loading="lazy">
+      </a>
+    {%- endif -%}
+
+    <a href="/"
+       class="button button--md button--primary">
+      Start Shopping
+    </a>
+  </footer>
+</section>

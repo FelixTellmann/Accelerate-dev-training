@@ -1,0 +1,93 @@
+{%- comment -%}
+ id: string
+ settings: section.settings / block.settings
+{%- endcomment -%}
+
+{%- if settings and id and selector -%}
+  {%- capture styles -%}
+    {%- liquid
+      assign _font_family = 'typography_' | append: id | append: '_font_family'
+      assign _size_weight_height = 'typography_' | append: id | append: '_size_weight_height'
+      assign _spacing_transform_style = 'typography_' | append: id | append: '_spacing_transform_style'
+    -%}
+
+    {%- liquid
+      assign font_family = settings[_font_family]
+      assign size_weight_height = settings[_size_weight_height] | strip_newlines | replace: ' ', "" | split: '|'
+      assign spacing_transform_style = settings[_spacing_transform_style] | strip_newlines | replace: ' ', "" | split: '|'
+
+      assign sizes = size_weight_height[0] | split: '/'
+      assign weight = size_weight_height[1] | split: '/'
+      assign height = size_weight_height[2] | split: '/'
+      assign opacity = size_weight_height[3] | split: '/'
+
+      assign spacing = spacing_transform_style[0] | split: '/'
+      assign transform = spacing_transform_style[1] | split: '/'
+      assign style = spacing_transform_style[2] | split: '/'
+
+      assign fallback_families = 'sans-serif'
+
+      if font_family == 'sans-serif' or font_family == 'inherit'
+        assign font_family = settings.font_family_1.family
+      endif
+
+      for i in (1..5)
+        assign _font_family = 'font_family_' | append: i
+        if font_family == settings[_font_family].family
+          assign fallback_families = settings[_font_family].fallback_families
+          break
+        endif
+      endfor
+
+    -%}
+
+    .{{- selector -}} {
+    font-family: var(--font-{{- selector -}}-family, inherit);
+    font-size: var(--font-{{- selector -}}-size-sm);
+    font-weight: var(--font-{{- selector -}}-weight-sm);
+    line-height: var(--font-{{- selector -}}-height-sm);
+    letter-spacing: var(--font-{{- selector -}}-spacing-sm);
+    text-transform: var(--font-{{- selector -}}-transform-sm);
+    font-style: var(--font-{{- selector -}}-style-sm);
+    opacity: var(--font-{{- selector -}}-opacity-sm);
+    }
+    @media screen and (min-width: 768px) {
+    .{{- selector -}} {
+    font-size: var(--font-{{- selector -}}-size);
+    font-weight: var(--font-{{- selector -}}-weight);
+    line-height: var(--font-{{- selector -}}-height);
+    letter-spacing: var(--font-{{- selector -}}-spacing);
+    text-transform: var(--font-{{- selector -}}-transform);
+    font-style: var(--font-{{- selector -}}-style);
+    opacity: var(--font-{{- selector -}}-opacity);
+    }
+    }
+
+    :root {
+    {%- if font_family contains " " -%}
+      --font-{{- selector -}}-family: {{- font_family | replace: "'", '' | replace: '"', '' | prepend: "'" | append: "'" -}}, {{- fallback_families -}};
+    {%- else -%}
+      --font-{{- selector -}}-family: {{- font_family -}}, {{- fallback_families -}};
+    {%- endif -%}
+    --font-{{- selector -}}-size: {{- sizes | first -}};
+    --font-{{- selector -}}-size-sm: {{- sizes | last -}};
+    --font-{{- selector -}}-weight: {{- weight | first -}};
+    --font-{{- selector -}}-weight-sm: {{- weight | last -}};
+    --font-{{- selector -}}-height: {{- height | first -}};
+    --font-{{- selector -}}-height-sm: {{- height | last -}};
+    --font-{{- selector -}}-spacing: {{- spacing | first -}};
+    --font-{{- selector -}}-spacing-sm: {{- spacing | last -}};
+    --font-{{- selector -}}-transform: {{- transform | first -}};
+    --font-{{- selector -}}-transform-sm: {{- transform | last -}};
+    --font-{{- selector -}}-style: {{- style | first -}};
+    --font-{{- selector -}}-style-sm: {{- style | last -}};
+    --font-{{- selector -}}-opacity: {{- opacity | first -}};
+    --font-{{- selector -}}-opacity-sm: {{- opacity | last -}};
+    }
+  {%- endcapture -%}
+  {%- if no_style -%}
+    {{- styles | strip_newlines -}}
+  {%- else -%}
+    <style>{{- styles | strip_newlines -}}</style>
+  {%- endif -%}
+{%- endif -%}

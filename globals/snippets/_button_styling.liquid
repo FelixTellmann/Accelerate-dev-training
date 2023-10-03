@@ -1,0 +1,306 @@
+{%- comment -%}
+ id: string
+ settings: section.settings / block.settings
+{%- endcomment -%}
+
+{%- if settings and id and selector -%}
+  {%- capture styles -%}
+    {%- liquid
+      assign _font_family = 'typography_' | append: id | append: '_font_family'
+      assign _size_weight_height = 'typography_' | append: id | append: '_size_weight_height'
+      assign _spacing_transform_style = 'typography_' | append: id | append: '_spacing_transform_style'
+      assign _padding = 'typography_' | append: id | append: '_padding'
+      assign _border = 'typography_' | append: id | append: '_border'
+      assign _hover = 'typography_' | append: id | append: '_hover'
+    -%}
+
+    {%- liquid
+      assign font_family = settings[_font_family]
+      assign size_weight_height = settings[_size_weight_height] | strip_newlines | replace: ' ', "" | split: '|'
+      assign spacing_transform_style = settings[_spacing_transform_style] | strip_newlines | replace: ' ', "" | split: '|'
+      assign padding = settings[_padding] | strip_newlines | replace: ' ', "" | split: '|'
+      assign border = settings[_border] | strip_newlines | replace: ' ', "" | split: '|'
+      assign hover = settings[_hover] | strip_newlines | replace: ' ', "" | split: '|'
+
+      assign sizes = size_weight_height[0] | split: '/'
+      assign weight = size_weight_height[1] | split: '/'
+      assign height = size_weight_height[2] | split: '/'
+      assign opacity = size_weight_height[3] | split: '/'
+
+      assign spacing = spacing_transform_style[0] | split: '/'
+      assign transform = spacing_transform_style[1] | split: '/'
+      assign style = spacing_transform_style[2] | split: '/'
+      assign whitespace = spacing_transform_style[3] | split: '/'
+
+      assign px = padding[0] | split: '/'
+      assign py = padding[1] | split: '/'
+
+      assign border_width = border[0] | split: '/'
+      assign border_radius = border[1] | split: '/'
+      assign shadow = border[2] | split: '/'
+      assign icon_gap = border[3] | split: '/'
+
+      assign shadow_lg = shadow | first | trim
+      assign shadow_sm = shadow | last | trim
+
+      assign hover_color = hover[0] | split: '/'
+      assign hover_radius = hover[1] | split: '/'
+      assign hover_shadow = hover[2] | split: '/'
+      assign hover_shadow_lg = hover_shadow | first | trim
+      assign hover_shadow_sm = hover_shadow | last | trim
+      assign hover_scale = hover[3] | split: '/'
+
+      assign hover_color_lg = hover_color | first | trim
+      assign hover_color_sm = hover_color | last | trim
+
+      assign fallback_families = 'sans-serif'
+
+      if font_family == 'sans-serif' or font_family == 'inherit'
+        assign font_family = settings.font_family_1.family
+      endif
+
+      for i in (1..5)
+        assign _font_family = 'font_family_' | append: i
+        if font_family == settings[_font_family].family
+          assign fallback_families = settings[_font_family].fallback_families
+          break
+        endif
+      endfor
+
+      case shadow_lg
+        when "1"
+          assign shadow_lg = "0 1px 2px 0 rgb(var(--color-button-shadow) / 0.05)"
+        when "2"
+          assign shadow_lg = "0 4px 6px 1px rgb(var(--color-button-shadow) / 0.1), 0 2px 4px 2px rgb(var(--color-button-shadow) / 0.1)"
+        when "3"
+          assign shadow_lg = "0 10px 15px 3px rgb(var(--color-button-shadow) / 0.1), 0 4px 6px 4px rgb(var(--color-button-shadow) / 0.1)"
+        when "4"
+          assign shadow_lg = "0 20px 25px 5px rgb(var(--color-button-shadow) / 0.1), 0 8px 10px 6px rgb(var(--color-button-shadow) / 0.1)"
+        when "5"
+          assign shadow_lg = "0 25px 50px 12px rgb(var(--color-button-shadow) / 0.25)"
+        else
+          assign shadow_lg = " none"
+      endcase
+
+      case shadow_sm
+        when "1"
+          assign shadow_sm = "0 1px 2px 0 rgb(var(--color-button-shadow) / 0.05)"
+        when "2"
+          assign shadow_sm = "0 4px 6px 1px rgb(var(--color-button-shadow) / 0.1), 0 2px 4px 2px rgb(var(--color-button-shadow) / 0.1)"
+        when "3"
+          assign shadow_sm = "0 10px 15px 3px rgb(var(--color-button-shadow) / 0.1), 0 4px 6px 4px rgb(var(--color-button-shadow) / 0.1)"
+        when "4"
+          assign shadow_sm = "0 20px 25px 5px rgb(var(--color-button-shadow) / 0.1), 0 8px 10px 6px rgb(var(--color-button-shadow) / 0.1)"
+        when "5"
+          assign shadow_sm = "0 25px 50px 12px rgb(var(--color-button-shadow) / 0.25)"
+        else
+          assign shadow_sm = " none"
+      endcase
+
+      case hover_shadow_lg
+        when "1"
+          assign hover_shadow_lg = "0 1px 2px 0 rgb(var(--color-button-shadow) / 0.05)"
+        when "2"
+          assign hover_shadow_lg = "0 4px 6px 1px rgb(var(--color-button-shadow) / 0.1), 0 2px 4px 2px rgb(var(--color-button-shadow) / 0.1)"
+        when "3"
+          assign hover_shadow_lg = "0 10px 15px 3px rgb(var(--color-button-shadow) / 0.1), 0 4px 6px 4px rgb(var(--color-button-shadow) / 0.1)"
+        when "4"
+          assign hover_shadow_lg = "0 20px 25px 5px rgb(var(--color-button-shadow) / 0.1), 0 8px 10px 6px rgb(var(--color-button-shadow) / 0.1)"
+        when "5"
+          assign hover_shadow_lg = "0 25px 50px 12px rgb(var(--color-button-shadow) / 0.25)"
+        else
+          assign hover_shadow_lg = " none"
+      endcase
+
+      case hover_shadow_sm
+        when "1"
+          assign hover_shadow_sm = "0 1px 2px 0 rgb(var(--color-button-shadow) / 0.05)"
+        when "2"
+          assign hover_shadow_sm = "0 4px 6px 1px rgb(var(--color-button-shadow) / 0.1), 0 2px 4px 2px rgb(var(--color-button-shadow) / 0.1)"
+        when "3"
+          assign hover_shadow_sm = "0 10px 15px 3px rgb(var(--color-button-shadow) / 0.1), 0 4px 6px 4px rgb(var(--color-button-shadow) / 0.1)"
+        when "4"
+          assign hover_shadow_sm = "0 20px 25px 5px rgb(var(--color-button-shadow) / 0.1), 0 8px 10px 6px rgb(var(--color-button-shadow) / 0.1)"
+        when "5"
+          assign hover_shadow_sm = "0 25px 50px 12px rgb(var(--color-button-shadow) / 0.25)"
+        else
+          assign hover_shadow_sm = "none"
+      endcase
+    -%}
+
+    .{{- selector -}} {
+    transition: all 150ms;
+    transform: translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skew(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+    display: inline-flex;
+    height: min-content;
+    align-self: center;
+    justify-self: center;
+    align-items: center;
+    justify-content: center;
+    gap: var(--font-{{- selector -}}-icon-gap-sm);
+    font-family: var(--font-{{- selector -}}-family, inherit);
+    font-size: var(--font-{{- selector -}}-size-sm);
+    font-weight: var(--font-{{- selector -}}-weight-sm);
+    line-height: var(--font-{{- selector -}}-height-sm);
+    letter-spacing: var(--font-{{- selector -}}-spacing-sm);
+    text-transform: var(--font-{{- selector -}}-transform-sm);
+    font-style: var(--font-{{- selector -}}-style-sm);
+    white-space:var(--font-{{- selector -}}-white-space-sm);
+    opacity: var(--font-{{- selector -}}-opacity-sm);
+    padding: var(--font-{{- selector -}}-py-sm) var(--font-{{- selector -}}-px-sm);
+    border-width: var(--font-{{- selector -}}-border-width-sm);
+    border-radius: var(--font-{{- selector -}}-border-radius-sm);
+    box-shadow: var(--font-{{- selector -}}-shadow-sm);
+    }
+    .{{- selector -}}:where(:hover,:focus,:active,.active) {
+    border-radius: var(--font-{{- selector -}}-hover-border-radius-sm);
+    box-shadow: var(--font-{{- selector -}}-hover-shadow-sm);
+    --tw-scale-x: var(--font-{{- selector -}}-hover-scale-sm);
+    --tw-scale-y: var(--font-{{- selector -}}-hover-scale-sm);
+    }
+    @media screen and (min-width: 768px) {
+    .{{- selector -}} {
+    gap: var(--font-{{- selector -}}-icon-gap);
+    font-size: var(--font-{{- selector -}}-size);
+    font-weight: var(--font-{{- selector -}}-weight);
+    line-height: var(--font-{{- selector -}}-height);
+    letter-spacing: var(--font-{{- selector -}}-spacing);
+    text-transform: var(--font-{{- selector -}}-transform);
+    font-style: var(--font-{{- selector -}}-style);
+    white-space:var(--font-{{- selector -}}-white-space);
+    opacity: var(--font-{{- selector -}}-opacity);
+    padding: var(--font-{{- selector -}}-py) var(--font-{{- selector -}}-px);
+    border-width: var(--font-{{- selector -}}-border-width);
+    border-radius: var(--font-{{- selector -}}-border-radius);
+    box-shadow: var(--font-{{- selector -}}-shadow);
+    }
+    .{{- selector -}}:where(:hover,:focus,:active,.active) {
+    border-radius: var(--font-{{- selector -}}-hover-border-radius);
+    box-shadow: var(--font-{{- selector -}}-hover-shadow);
+    --tw-scale-x: var(--font-{{- selector -}}-hover-scale);
+    --tw-scale-y: var(--font-{{- selector -}}-hover-scale);
+    }
+    }
+
+    {% case hover_color_sm %}
+      {% when "1" %}
+        .button-primary.{{- selector -}}:where(:hover,:focus,:active,.active),
+        .color--primary.{{- selector -}}:where(:hover,:focus,:active,.active) {
+        background: var(--color-primary-bg--hover--hex);
+        }
+        .button-secondary.{{- selector -}}:where(:hover,:focus,:active,.active),
+        .color--secondary.{{- selector -}}:where(:hover,:focus,:active,.active) {
+        background: var(--color-secondary-bg--hover--hex);
+        }
+        .button-primary--outline.{{- selector -}}:where(:hover,:focus,:active,.active),
+        .color--primary--outline.{{- selector -}}:where(:hover,:focus,:active,.active) {
+        border-color: var(--color-primary-outline--hover--hex);
+        }
+        .button-secondary--outline.{{- selector -}}:where(:hover,:focus,:active,.active),
+        .color--secondary--outline.{{- selector -}}:where(:hover,:focus,:active,.active) {
+        border-color: var(--color-secondary-outline--hover--hex);
+        }
+      {% when "2" %}
+        .button-primary.{{- selector -}}:where(:hover,:focus,:active,.active),
+        .color--primary.{{- selector -}}:where(:hover,:focus,:active,.active) {
+        color: var(--color-secondary-text--hex);
+        background-color: var(--color-secondary-bg--hex);
+        background-image: var(--color-secondary-bg-gradient, none);
+        border-color: var(--color-secondary-bg--hex);
+        }
+        .button-secondary.{{- selector -}}:where(:hover,:focus,:active,.active),
+        .color--secondary.{{- selector -}}:where(:hover,:focus,:active,.active) {
+        color: var(--color-primary-text--hex);
+        background-color: var(--color-primary-bg--hex);
+        background-image: var(--color-primary-bg-gradient, none);
+        border-color: var(--color-primary-bg--hex);
+        }
+        .button-primary--outline.{{- selector -}}:where(:hover,:focus,:active,.active),
+        .color--primary--outline.{{- selector -}}:where(:hover,:focus,:active,.active) {
+        color: var(--color-secondary-text--hex);
+        border-color: var(--color-secondary-outline--hover--hex);
+        }
+        .button-secondary--outline.{{- selector -}}:where(:hover,:focus,:active,.active),
+        .color--secondary--outline.{{- selector -}}:where(:hover,:focus,:active,.active) {
+        color: var(--color-primary-text--hex);
+        border-color: var(--color-primary-outline--hover--hex);
+        }
+      {% when "3" %}
+        .button-primary.{{- selector -}}:where(:hover,:focus,:active,.active),
+        .color--primary.{{- selector -}}:where(:hover,:focus,:active,.active) {
+        color: var(--color-primary-bg--hex);
+        background-color: var(--color-primary-text--hex);
+        background-image: none;
+        border-color: var(--color-primary-bg--hex);
+        }
+        .button-secondary.{{- selector -}}:where(:hover,:focus,:active,.active),
+        .color--secondary.{{- selector -}}:where(:hover,:focus,:active,.active) {
+        color: var(--color-secondary-bg--hex);
+        background-color: var(--color-secondary-text--hex);
+        background-image: none;
+        border-color: var(--color-secondary-bg--hex);
+        }
+        .button-primary--outline.{{- selector -}}:where(:hover,:focus,:active,.active),
+        .color--primary--outline.{{- selector -}}:where(:hover,:focus,:active,.active) {
+        color: var(--color-primary-text--hex);
+        background-color: var(--color-primary-outline--hex);
+        background-image: none;
+        border-color: var(--color-primary-bg--hex);
+        }
+        .button-secondary--outline.{{- selector -}}:where(:hover,:focus,:active,.active),
+        .color--secondary--outline.{{- selector -}}:where(:hover,:focus,:active,.active) {
+        color: var(--color-secondary-text--hex);
+        background-color: var(--color-secondary-outline--hex);
+        background-image: none;
+        border-color: var(--color-secondary-bg--hex);
+        }
+    {% endcase %}
+
+    :root {
+    {%- if font_family contains " " -%}
+      --font-{{- selector -}}-family: {{- font_family | replace: "'", '' | replace: '"', '' | prepend: "'" | append: "'" -}}, {{- fallback_families -}};
+    {%- else -%}
+      --font-{{- selector -}}-family: {{- font_family -}}, {{- fallback_families -}};
+    {%- endif -%}
+    --font-{{- selector -}}-size: {{- sizes | first -}};
+    --font-{{- selector -}}-size-sm: {{- sizes | last -}};
+    --font-{{- selector -}}-weight: {{- weight | first -}};
+    --font-{{- selector -}}-weight-sm: {{- weight | last -}};
+    --font-{{- selector -}}-height: {{- height | first -}};
+    --font-{{- selector -}}-height-sm: {{- height | last -}};
+    --font-{{- selector -}}-spacing: {{- spacing | first -}};
+    --font-{{- selector -}}-spacing-sm: {{- spacing | last -}};
+    --font-{{- selector -}}-transform: {{- transform | first -}};
+    --font-{{- selector -}}-transform-sm: {{- transform | last -}};
+    --font-{{- selector -}}-style: {{- style | first -}};
+    --font-{{- selector -}}-style-sm: {{- style | last -}};
+    --font-{{- selector -}}-white-space: {{- whitespace | first -}};
+    --font-{{- selector -}}-white-space-sm: {{- whitespace | last -}};
+    --font-{{- selector -}}-opacity: {{- opacity | first -}};
+    --font-{{- selector -}}-opacity-sm: {{- opacity | last -}};
+    --font-{{- selector -}}-py: {{- py | first -}};
+    --font-{{- selector -}}-py-sm: {{- py | last -}};
+    --font-{{- selector -}}-px: {{- px | first -}};
+    --font-{{- selector -}}-px-sm: {{- px | last -}};
+    --font-{{- selector -}}-border-width: {{- border_width | first -}};
+    --font-{{- selector -}}-border-width-sm: {{- border_width | last -}};
+    --font-{{- selector -}}-border-radius: {{- border_radius | first -}};
+    --font-{{- selector -}}-border-radius-sm: {{- border_radius | last -}};
+    --font-{{- selector -}}-shadow: {{- shadow_lg -}};
+    --font-{{- selector -}}-shadow-sm: {{- shadow_sm -}};
+    --font-{{- selector -}}-icon-gap: {{- icon_gap | first -}};
+    --font-{{- selector -}}-icon-gap-sm: {{- icon_gap | last -}};
+    --font-{{- selector -}}-hover-shadow: {{- hover_shadow_lg -}};
+    --font-{{- selector -}}-hover-shadow-sm: {{- hover_shadow_sm -}};
+    --font-{{- selector -}}-hover-border-radius: {{- hover_radius | first -}};
+    --font-{{- selector -}}-hover-border-radius-sm: {{- hover_radius | last -}};
+    --font-{{- selector -}}-hover-scale: {{ hover_scale }};
+    --font-{{- selector -}}-hover-scale-sm: {{ hover_scale }};
+    }
+  {%- endcapture -%}
+  {%- if no_style -%}
+    {{- styles | strip_newlines -}}
+  {%- else -%}
+    <style>{{- styles | strip_newlines -}}</style>
+  {%- endif -%}
+{%- endif -%}

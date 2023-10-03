@@ -1,0 +1,77 @@
+{
+  "extends": "./../node_modules/fx-style/tsconfig-google.json",
+  "compilerOptions": {
+    "strictNullChecks": false,
+    "exactOptionalPropertyTypes": false,
+    "noPropertyAccessFromIndexSignature": false,
+    "noUncheckedIndexedAccess": false,
+    "esModuleInterop": true,
+    "module": "ESNext",
+    "noImplicitAny": false,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "isolatedModules": false,
+    "resolveJsonModule": false,
+    "noEmit": false,
+    "declaration": false,
+    "incremental": false,
+    "allowJs": false,
+    "typeRoots": [
+      "./../node_modules/@types",
+      "./types.ts",
+      "./_types.d.ts",
+      "./@types/types.ts"
+    ],
+    "paths": {
+      "types/*": [
+        "./@types/*"
+      ],
+      "/*": [
+        "./*"
+      ],
+      "/assets/*": [
+        "./*"
+      ],
+      "react": [
+        "./../node_modules/preact/compat/"
+      ],
+      "react-dom": [
+        "./../node_modules/preact/compat/"
+      ]
+    },
+     "strict": false,
+    "jsx": "react-jsx",
+    "target": "es6",
+    "lib": [
+      "dom",
+      "es2015",
+      "dom.iterable"
+    ],
+    "noEmitHelpers": true,
+    "importHelpers": true,
+    "jsxImportSource": "preact",
+    "types": [
+      "preact/jsx-runtime",
+      "react",
+      "@types/node",
+      "node"
+    ],
+    "baseUrl": ".",
+    "sourceMap": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "downlevelIteration": true,
+    "noImplicitReturns": false,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "./../node_modules"
+  ]
+}
+

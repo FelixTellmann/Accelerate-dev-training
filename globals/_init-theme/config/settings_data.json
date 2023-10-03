@@ -1,0 +1,777 @@
+{
+  "current": {
+    "branding_logo_dark_on_light": "shopify:\/\/shop_images\/logotype_3.png",
+    "branding_logo_light_on_dark": "shopify:\/\/shop_images\/logotype_2.png",
+    "branding_favicon": "shopify:\/\/shop_images\/Vector_2.png",
+    "layout_is_fullwidth": false,
+    "layout_page_width": 1400,
+    "layout_section_padding_sm": 24,
+    "layout_section_padding_md": 72,
+    "layout_section_padding_lg": 150,
+    "layout_section_padding_lg__mobile": 240,
+    "color_scheme": "color_scheme_1",
+    "color_grayscale": "slate",
+    "color_error": "#e20f28",
+    "color_warning": "#ffa800",
+    "color_success": "#00c064",
+    "color_info": "#0082fb",
+    "color_review_stars": "#ce9440",
+    "font_family_1": "poppins_n4",
+    "font_weights_1": "400,400i,500,600,700",
+    "font_custom_family_1": "",
+    "font_custom_src_1": "",
+    "font_family_2": "poppins_n4",
+    "font_family_3": "poppins_n4",
+    "font_family_4": "poppins_n4",
+    "font_family_5": "poppins_n4",
+    "typography_1_h1_font_family": "Poppins",
+    "typography_1_h1_size_weight_height": "48px \/ 36px | 400 | 1.1 \/ 1.45",
+    "typography_1_h1_spacing_transform_style": "-.01em | none | normal",
+    "typography_1_h2_font_family": "Poppins",
+    "typography_1_h2_size_weight_height": "40px \/ 32px|  400 | 1 \/ 1.25",
+    "typography_1_h3_font_family": "Poppins",
+    "typography_1_h3_size_weight_height": "24px \/ 21px | 400 | 1.3",
+    "typography_1_h3_spacing_transform_style": "-0.02em | none | normal",
+    "typography_1_h4_font_family": "Poppins",
+    "typography_1_h4_size_weight_height": "18px \/ 17px | 400 | 1.4",
+    "typography_1_h5_font_family": "Poppins",
+    "typography_1_h5_size_weight_height": "14px \/ 13px | 400 | 1.3",
+    "typography_1_h6_font_family": "Poppins",
+    "typography_1_h6_size_weight_height": "12px | 400 | 1.5",
+    "typography_1_p_font_family": "",
+    "typography_1_p_size_weight_height": "16px \/ 16px | 400 | 1.4",
+    "typography_1_p_spacing_transform_style": "0 | none | normal",
+    "typography_2_h1_font_family": "Poppins",
+    "typography_2_h1_size_weight_height": "48px \/ 36px | 700 | 1.1 \/ 1.45",
+    "typography_2_h1_spacing_transform_style": "-.01em | none | normal",
+    "typography_2_h2_font_family": "Poppins",
+    "typography_2_h2_size_weight_height": "40px \/ 32px | 700 | 1 \/ 1.25",
+    "typography_2_h3_font_family": "Poppins",
+    "typography_2_h3_size_weight_height": "24px \/ 21px | 700 | 1.3",
+    "typography_2_h3_spacing_transform_style": "0 | none | normal",
+    "typography_2_h4_font_family": "Poppins",
+    "typography_2_h4_size_weight_height": "18px \/ 17px | 700 | 1.4",
+    "typography_2_h5_font_family": "Poppins",
+    "typography_2_h5_size_weight_height": "14px \/ 13px | 700 | 1.3",
+    "typography_2_h6_font_family": "Poppins",
+    "typography_2_h6_size_weight_height": "12px | 700 | 1.5",
+    "typography_2_p_font_family": "Poppins",
+    "typography_2_p_size_weight_height": "16px \/ 16px | 700 | 1.4",
+    "typography_2_p_spacing_transform_style": "0 | none | normal",
+    "typography_3_h1_font_family": "Poppins",
+    "typography_3_h2_font_family": "Poppins",
+    "typography_3_h2_size_weight_height": "40px \/ 32px | 700 | 1.1",
+    "typography_3_h3_font_family": "Poppins",
+    "typography_3_h3_size_weight_height": "24px \/ 21px | 600 | 1.2",
+    "typography_3_h4_font_family": "Poppins",
+    "typography_3_h4_size_weight_height": "18px \/ 17px | 600 | 1.3",
+    "typography_3_h5_font_family": "Poppins",
+    "typography_3_h6_font_family": "Poppins",
+    "typography_3_p_font_family": "Poppins",
+    "typography_nav_link_size_weight_height": "16px | 500 | 1.4 | 1",
+    "typography_megamenu_link_large_size_weight_height": "20px | 600 | 1.4 | 1",
+    "typography_megamenu_image_caption_size_weight_height": "18px | 600 | 1.3 | 1",
+    "typography_button_md_font_family": "inherit",
+    "typography_button_md_size_weight_height": "16px \/ 16px | 600 | 1.4 | 1",
+    "typography_button_md_spacing_transform_style": "0.03em | none | normal | nowrap",
+    "typography_button_md_padding": "40px | 16px",
+    "typography_button_md_border": "1px | 4px | 0 | 16px \/ 12px",
+    "typography_button_md_hover": "1 | 6px | 0 | 100%",
+    "typography_button_sm_spacing_transform_style": "0.01em | none | uppercase | nowrap",
+    "typography_button_sm_hover": "3 | 4px | 0 | 100%",
+    "typography_input_md_font_family": "Poppins",
+    "typography_input_md_size_weight_height": "16px \/ 16px | 600 | 1.4 | 1",
+    "typography_input_md_spacing_transform_style": "0.03em | none | normal | nowrap",
+    "typography_input_md_border": "1px | 4px | 0",
+    "typography_select_md_font_family": "Poppins",
+    "typography_select_md_size_weight_height": "16px \/ 16px | 600 | 1.4 | 1",
+    "typography_select_md_spacing_transform_style": "0.03em | none | normal | nowrap",
+    "typography_select_md_border": "1px | 4px | 0",
+    "product_card__labels__discount": "percentage",
+    "typography_labels_font_family": "Poppins",
+    "typography_labels_size_weight_height": "14px | 500 | 1.5 | 1",
+    "typography_labels_border": "0px | 4px | 0",
+    "typography_tab_md_border": "2px | 9999px | 0 | 16px \/ 14px",
+    "design_border_radius": "medium",
+    "typography_breadcrumbs_font_family": "Poppins",
+    "typography_breadcrumbs_size_weight_height": "12px | 400 | 1.5 | 1",
+    "typography_product_price_font_family": "Poppins",
+    "product_card__background_color": "#f2f2f2",
+    "product_card__image__ratio": "pb-[100%]",
+    "product_card__image__show_secondary": true,
+    "product_card__image__drop_shadow": true,
+    "product_card__image__margin_bottom": 12,
+    "product_card__labels__show": true,
+    "product_card__variant_count__show": false,
+    "typography_product_card__title__font_font_family": "Poppins",
+    "typography_product_card__title__font_size_weight_height": "16px \/ 14px | 600 | 1 \/ 1.35 | 1",
+    "typography_product_card__title__font_spacing_transform_style": "0 | none | normal",
+    "product_card__rating__show": true,
+    "product_card__vendor__show": false,
+    "product_card__price__show": true,
+    "product_card__variant_selector__show": true,
+    "product_card__variant_selector__color_list": "color,colour,couleur,cor,colore,farbe,색,色,カラー,färg,farve,szín,barva,IPHONE MODEL",
+    "product_card__button__style": "button-primary--outline",
+    "product_card__button__size": "button--sm",
+    "product_card__button_show_price": true,
+    "typography_small_product_card__title__font_font_family": "Poppins",
+    "typography_article_card_title_font_family": "Poppins",
+    "typography_article_card_title_size_weight_height": "20px | 700 | 1.5 | 1",
+    "typography_article_card_specs_font_family": "Poppins",
+    "typography_article_card_specs_size_weight_height": "12px | 400 | 1.4 | 1",
+    "typography_article_card_description_font_family": "Poppins",
+    "typography_article_card_description_size_weight_height": "16px | 400 | 1.7 | 1",
+    "typography_article_card_link_font_family": "Poppins",
+    "typography_article_card_link_size_weight_height": "16px | 700 | 1.5 | 1",
+    "social_twitter_link": "",
+    "social_facebook_link": "https:\/\/facebook.com\/shopify",
+    "social_pinterest_link": "",
+    "social_instagram_link": "https:\/\/instagram.com\/shopify",
+    "social_tiktok_link": "",
+    "social_tumblr_link": "",
+    "social_snapchat_link": "",
+    "social_youtube_link": "https:\/\/www.youtube.com\/shopify",
+    "social_vimeo_link": "",
+    "cart_type": "drawer",
+    "typography_cart_title_font_family": "Poppins",
+    "typography_cart_title_size_weight_height": "18px |  600 | 1.1 \/ 1.2 | 1 \/ 1",
+    "typography_cart_title_spacing_transform_style": "0em | none | normal",
+    "cart_gift_checkbox": true,
+    "cart_note": true,
+    "cart_color_scheme": "color_scheme_4",
+    "product_data__preorder_cta": true,
+    "typography_input_element_font_family": "Poppins",
+    "typography_button-test_padding": "24px \/ 16px | 10px",
+    "typography_button-test_border": "1px | 5px | 0",
+    "typography_button-test_hover": "1 | 9999px | 4 | 120%",
+    "branding_logo_square_dark_on_light": "shopify:\/\/shop_images\/business-pug-working-on-laptop.jpg",
+    "sections": {
+      "header": {
+        "type": "header",
+        "blocks": {
+          "5d32137b-96e8-47b5-b349-278e00031602": {
+            "type": "megamenu",
+            "disabled": true,
+            "settings": {
+              "handle": "home",
+              "font_scale": 100,
+              "rows": "2",
+              "show_images": true,
+              "image__overlay": "linear-gradient(180deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.25) 100%)",
+              "show_caption": true,
+              "image_caption_color": "#fefefe",
+              "override_1_handle": "another-item",
+              "override_2_handle": "",
+              "override_3_handle": "",
+              "override_4_handle": "",
+              "override_5_handle": ""
+            }
+          }
+        },
+        "block_order": [
+          "5d32137b-96e8-47b5-b349-278e00031602"
+        ],
+        "custom_css": [
+
+        ],
+        "settings": {
+          "color_scheme": "color_scheme_4",
+          "logo": "branding_logo_dark_on_light",
+          "logo_height": 40,
+          "floating": true,
+          "menu": "main-menu",
+          "search__show": true,
+          "accounts__show": true,
+          "cart__show": true,
+          "flat_mobile_menu": true,
+          "force_hamburger_menu": false,
+          "center_logo": true,
+          "center_logo__desktop": false,
+          "height": 70,
+          "position": "sticky",
+          "button_primary__text": "BUILD A BUNDLE",
+          "button_primary__url": "shopify:\/\/pages\/build-a-bundle",
+          "button_primary__style": "button-secondary",
+          "button_primary__size": "button--md",
+          "show_button_mobile": false,
+          "sectionID": ""
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "blocks": {
+          "674ca748-8a05-4905-a68c-19b739094f5f": {
+            "type": "menu",
+            "settings": {
+              "heading": "",
+              "menu": "footer-quick-links-2-0",
+              "columns": "col-span-1"
+            }
+          },
+          "a0558009-11d6-4c24-b4ef-d3e25d88c915": {
+            "type": "menu",
+            "settings": {
+              "heading": "",
+              "menu": "footer-help-center-2-0",
+              "columns": "col-span-1"
+            }
+          },
+          "a84e497e-00f9-41f4-b170-9cb0b5431356": {
+            "type": "menu",
+            "settings": {
+              "heading": "",
+              "menu": "footer-shop-2-0",
+              "columns": "col-span-1"
+            }
+          }
+        },
+        "block_order": [
+          "674ca748-8a05-4905-a68c-19b739094f5f",
+          "a0558009-11d6-4c24-b4ef-d3e25d88c915",
+          "a84e497e-00f9-41f4-b170-9cb0b5431356"
+        ],
+        "settings": {
+          "logo_show": true,
+          "logo": "branding_logo_light_on_dark",
+          "logo_height": 40,
+          "newsletter_show": true,
+          "newsletter_heading": "<p>Join For 10% Off!<\/p>",
+          "newsletter_subheading": "<p>Be the first to know about new collections and exclusive offers.<\/p>",
+          "button_primary__text": "Submit",
+          "button_primary__style": "button-secondary",
+          "button_primary__size": "button--md",
+          "newsletter_checkbox_show": true,
+          "newsletter_checkbox_value": "footer-checkbox",
+          "newsletter_checkbox_label": "By submitting this form and signing up for emails, you consent to receive marketing emails from Bullstrap at the email provided. Unsubscribe at any time by replying STOP.",
+          "newsletter_footer_content": "",
+          "newsletter_liquid_replace": "",
+          "social_content_layout": "right",
+          "social_icons_show": true,
+          "address_show": false,
+          "email_show": false,
+          "country_selector_show": true,
+          "language_selector_show": true,
+          "policy_links_show": true,
+          "payment_types_show": true,
+          "color_scheme": "color_scheme_5",
+          "powered_by_text": "",
+          "sectionID": ""
+        }
+      },
+      "cart-drawer": {
+        "type": "cart-drawer",
+        "blocks": {
+          "21914d90-1ecd-4b8e-ba6a-2ac81f017776": {
+            "type": "announcement",
+            "settings": {
+              "text": "<p>FREE SHIPPING ON US ORDERS OVER $100<\/p>",
+              "short_text": "",
+              "announcement_font": 2,
+              "link": "\/",
+              "color_bg": "#000000",
+              "color_text": "#ffffff",
+              "position": "center",
+              "display_duration": 10,
+              "scheduled": false,
+              "start_date": "",
+              "end_date": ""
+            }
+          },
+          "bff3add2-447d-4fdd-a609-bf2944c441aa": {
+            "type": "footer_text",
+            "disabled": true,
+            "settings": {
+              "title": "<p>[icon.5-stars]<\/p><h6><\/h6><h6>“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis diam lorem. Praesent auctor dapibus purus, eu facilisis nunc auctor et. In fermentum nunc et est vulputate malesuada.”<\/h6><h6><\/h6><h6><strong>John Doe, Verified Buyer<\/strong><\/h6>",
+              "title_font": 1,
+              "opacity": 100,
+              "alignment_desktop": "[text-align:inherit]",
+              "alignment_mobile": "max-md:[text-align:inherit]",
+              "margin_top": 0,
+              "margin_bottom": 20,
+              "section_max_width": "max-w-2xl",
+              "responsive_visibility": "responsive"
+            }
+          },
+          "f25ef904-6b1a-45c1-8304-510b7bc9f931": {
+            "type": "empty_text",
+            "settings": {
+              "title": "<h3>Empty Cart<\/h3><p><\/p><p>This is a Paragraph with some Lorem Ipsum Content This is a with more text here Paragraph with some Lorem Ipsum Content<\/p>",
+              "title_font": 1,
+              "opacity": 100,
+              "alignment_desktop": "[text-align:inherit]",
+              "alignment_mobile": "max-md:[text-align:inherit]",
+              "margin_top": 34,
+              "margin_bottom": 0,
+              "section_max_width": "max-w-sm",
+              "responsive_visibility": "responsive"
+            }
+          },
+          "802faf61-2f10-41e8-95ef-896cecb66483": {
+            "type": "empty_feature_grid",
+            "settings": {
+              "products": [
+                "magsafe-iphone-cases-cloud",
+                "gray-magsafe-iphone-case",
+                "cloud-magsafe-iphone-case",
+                "rain-magsafe-iphone-case"
+              ],
+              "collections": [
+
+              ],
+              "feature_title": "<h5><strong>[title]<\/strong><\/h5>",
+              "featured_title_font": 1,
+              "overlay": "rgba(0,0,0,0)",
+              "size": 70,
+              "border_radius": 3,
+              "grid_gap": 16,
+              "layout": "grid-cols-1",
+              "margin_bottom": 0
+            }
+          },
+          "387c9a24-ed60-473d-b4ff-fac00982e9be": {
+            "type": "footer_buttons",
+            "settings": {
+              "button_primary__text": "Primary Button",
+              "button_primary__url": "\/",
+              "button_primary__style": "button-primary--outline",
+              "button_primary__size": "button--md",
+              "button_secondary__text": "SECONDARY BUTTON",
+              "button_secondary__url": "\/",
+              "button_secondary__style": "button-secondary",
+              "button_secondary__size": "button--md",
+              "button__mobile_layout": "flex flex-col md:flex-row w-full",
+              "button__desktop_layout": "flex md:!flex-col w-full",
+              "margin_top": 0,
+              "margin_bottom": 2,
+              "section_max_width": "max-w-full",
+              "responsive_visibility": "responsive"
+            }
+          },
+          "976d24df-d4f0-4a32-a6e7-8606c70e9a63": {
+            "type": "footer_text",
+            "settings": {
+              "title": "<h6>FREE SHIPPING<\/h6>",
+              "title_font": 1,
+              "opacity": 100,
+              "alignment_desktop": "[text-align:inherit]",
+              "alignment_mobile": "max-md:[text-align:inherit]",
+              "margin_top": 0,
+              "margin_bottom": 8,
+              "section_max_width": "max-w-2xl",
+              "responsive_visibility": "responsive"
+            }
+          }
+        },
+        "block_order": [
+          "21914d90-1ecd-4b8e-ba6a-2ac81f017776",
+          "bff3add2-447d-4fdd-a609-bf2944c441aa",
+          "f25ef904-6b1a-45c1-8304-510b7bc9f931",
+          "802faf61-2f10-41e8-95ef-896cecb66483",
+          "387c9a24-ed60-473d-b4ff-fac00982e9be",
+          "976d24df-d4f0-4a32-a6e7-8606c70e9a63"
+        ],
+        "settings": {
+          "free_shipping_bar__show": "all",
+          "free_shipping_bar__type": "total_price",
+          "free_shipping_bar__starting_percentage": 8,
+          "free_shipping_bar__target": 5000,
+          "free_shipping_bar__height": 53,
+          "free_shipping_bar__bar_height": 7,
+          "free_shipping_bar__color_scheme": "color_scheme_1",
+          "message": "<strong>Add [remaining] to get Free Shipping<\/strong>",
+          "message__success": "You've got Free Shipping!",
+          "announcements__show": "all",
+          "announcements__height": 40,
+          "button__text": "Checkout",
+          "button__style": "button-secondary",
+          "button__size": "button--sm",
+          "button__show_price": true,
+          "cart__recommended_products__enable": true,
+          "cart__recommended_products_source": "complementary",
+          "cart__recommended_products": [
+            "magsafe-iphone-cases-sienna",
+            "magsafe-iphone-cases-south-beach",
+            "magsafe-iphone-cases-ocean"
+          ],
+          "cart__recommended_products_quantity": 3,
+          "cart__recommended_products_hide_upsell_products": false,
+          "align__horizontal": "items-center text-center",
+          "align__horizontal__footer": "items-center text-center"
+        }
+      },
+      "product-quick-view": {
+        "type": "product-quick-view",
+        "blocks": {
+          "price": {
+            "type": "price",
+            "settings": {
+              "margin_bottom": 0,
+              "margin_top": 0,
+              "grid_span": "col-span-8",
+              "custom_css": ""
+            }
+          },
+          "title": {
+            "type": "title",
+            "settings": {
+              "title": "<h5><strong>[title]<\/strong><\/h5>",
+              "title_font": 1,
+              "margin_bottom": 0,
+              "margin_top": 0,
+              "grid_span": "col-span-6",
+              "custom_css": ""
+            }
+          },
+          "a0c3557e-f626-42f4-b609-eb97fc445cae": {
+            "type": "rating",
+            "settings": {
+              "margin_bottom": 0,
+              "margin_top": 0,
+              "grid_span": "col-span-6",
+              "custom_css": ""
+            }
+          },
+          "944db757-096e-4377-84e9-eed9142e373d": {
+            "type": "image_gallery",
+            "settings": {
+              "gallery__zoom": true,
+              "gallery__zoom_scale": 200,
+              "hide_not_selected_variant_images": false,
+              "auto_select_variant_image": true,
+              "variants_multi_images": "disabled",
+              "variants_image_metafield": "smart.images",
+              "gallery__loop_videos": false,
+              "margin_bottom": 0,
+              "margin_top": 0,
+              "custom_css": ""
+            }
+          },
+          "fcf2f1ff-2ac8-4536-81ef-2dc3d239503e": {
+            "type": "inventory",
+            "disabled": true,
+            "settings": {
+              "threshold": 5,
+              "margin_bottom": 0,
+              "margin_top": 0,
+              "custom_css": ""
+            }
+          },
+          "6d9e4d3c-db73-44e5-9494-8aed9804461b": {
+            "type": "variant_selector",
+            "settings": {
+              "disable_unavailable": true,
+              "image_selector": false,
+              "color_selector": false,
+              "color_selector__source": "via_option",
+              "color_selector_size": 32,
+              "color_selector_radius": -1,
+              "color_list": "color,colour,couleur,cor,colore,farbe,색,色,カラー,färg,farve,szín,barva",
+              "default_type": "select",
+              "margin_bottom": 0,
+              "margin_top": 0,
+              "custom_css": ""
+            }
+          },
+          "quantity_selector": {
+            "type": "quantity_selector",
+            "settings": {
+              "margin_bottom": 0,
+              "margin_top": 0,
+              "grid_span": "col-span-12",
+              "custom_css": ""
+            }
+          },
+          "buy_buttons": {
+            "type": "buy_buttons",
+            "settings": {
+              "margin_bottom": 0,
+              "margin_top": 0,
+              "grid_span": "col-span-12",
+              "button__style": "button-primary",
+              "button__size": "button--md",
+              "button__show_price": false,
+              "custom_css": ""
+            }
+          },
+          "16eae1aa-2b18-4ddb-b435-b481ac775019": {
+            "type": "dynamic_buy_buttons",
+            "disabled": true,
+            "settings": {
+              "button__size": "button--md",
+              "margin_bottom": 0,
+              "margin_top": 0,
+              "grid_span": "col-span-6",
+              "custom_css": ""
+            }
+          },
+          "description": {
+            "type": "description",
+            "settings": {
+              "style": "accordion",
+              "uncollapse": false,
+              "custom_tag_overrides": "",
+              "margin_bottom": 0,
+              "margin_top": 0,
+              "custom_css": ""
+            }
+          },
+          "601e50bf-1ed0-424c-945e-f7489a137200": {
+            "type": "complementary",
+            "settings": {
+              "title": "<h6>Pairs Well With ...<\/h6>",
+              "title_font": 1,
+              "image__show_secondary": false,
+              "source": "complementary",
+              "products": [
+                "magsafe-iphone-cases-maverick",
+                "magsafe-iphone-cases-ocean"
+              ],
+              "hide_upsell_products": false,
+              "style": "small",
+              "margin_bottom": 0,
+              "margin_top": 0,
+              "custom_css": ""
+            }
+          },
+          "7b468bff-2858-4088-aaa1-27f7ee5c56c5": {
+            "type": "icon_with_text",
+            "settings": {
+              "layout": "flex-col",
+              "item_layout": "flex-row",
+              "size": 16,
+              "content_font": 1,
+              "icon_1": "globe",
+              "heading_1": "<h6>Sustainably Made<\/h6>",
+              "icon_2": "heart",
+              "heading_2": "<h6>Lifetime Warranty<\/h6>",
+              "icon_3": "truck",
+              "heading_3": "<h6>Free Shipping<\/h6>",
+              "icon_4": "check-square-broken",
+              "heading_4": "",
+              "margin_bottom": 0,
+              "margin_top": 0,
+              "custom_css": ""
+            }
+          }
+        },
+        "block_order": [
+          "price",
+          "title",
+          "a0c3557e-f626-42f4-b609-eb97fc445cae",
+          "944db757-096e-4377-84e9-eed9142e373d",
+          "fcf2f1ff-2ac8-4536-81ef-2dc3d239503e",
+          "6d9e4d3c-db73-44e5-9494-8aed9804461b",
+          "quantity_selector",
+          "buy_buttons",
+          "16eae1aa-2b18-4ddb-b435-b481ac775019",
+          "description",
+          "601e50bf-1ed0-424c-945e-f7489a137200",
+          "7b468bff-2858-4088-aaa1-27f7ee5c56c5"
+        ],
+        "settings": {
+          "active": true,
+          "preview_product": "",
+          "grid_gap": 12,
+          "color_scheme": "color_scheme_1"
+        }
+      },
+      "search": {
+        "type": "search",
+        "settings": {
+          "placeholder": "Search",
+          "search_results_title": "<h3>Search Results<\/h3>",
+          "search_results_title_font": 1,
+          "search_results_empty": "<h4>Nothing found<\/h4>",
+          "search_results_empty_font": 1,
+          "search_products": true,
+          "search_articles": false,
+          "search_pages": false
+        }
+      },
+      "password-header": {
+        "type": "password-header",
+        "settings": {
+          "color_scheme": "color_scheme_1",
+          "logo": "branding_logo_dark_on_light",
+          "logo_height": 40,
+          "menu": "main-menu",
+          "center_logo": false,
+          "height": 100
+        }
+      },
+      "password-footer": {
+        "type": "password-footer",
+        "blocks": {
+          "password-footer-0": {
+            "type": "text",
+            "settings": {
+              "heading": "<p>Heading<\/p>",
+              "subtext": "<p>Share contact information, store details, and brand content with your customers.<\/p>",
+              "color_grayscale_style": "normal"
+            }
+          },
+          "a0151f61-95ff-4a21-840f-d50221066c60": {
+            "type": "text",
+            "settings": {
+              "heading": "",
+              "subtext": "",
+              "color_grayscale_style": "normal"
+            }
+          }
+        },
+        "block_order": [
+          "password-footer-0",
+          "a0151f61-95ff-4a21-840f-d50221066c60"
+        ],
+        "settings": {
+          "logo": "branding_logo_light_on_dark",
+          "newsletter_show": true,
+          "newsletter_heading": "<p>Subscribe to our emails<\/p>",
+          "social_icons_show": true,
+          "country_selector_show": false,
+          "language_selector_show": true,
+          "policy_links_show": true,
+          "payment_types_show": false,
+          "color_scheme": "color_scheme_3"
+        }
+      },
+      "product-data": {
+        "type": "product-data",
+        "settings": {
+        }
+      },
+      "gift-with-purchase": {
+        "type": "gift-with-purchase",
+        "blocks": {
+          "47b08bac-ba30-4374-9f16-2a117a738c08": {
+            "type": "gift",
+            "settings": {
+              "type": "quantity",
+              "target": 1,
+              "target_collection": "collection-3",
+              "target_products": [
+                "apron-sandbox-store-home-goods"
+              ],
+              "receives_quantity": 1,
+              "receives_discount_percentage": 100,
+              "receives_collection": "collection-1",
+              "receives_products": [
+                "magsafe-iphone-cases-black-edition"
+              ]
+            }
+          }
+        },
+        "block_order": [
+          "47b08bac-ba30-4374-9f16-2a117a738c08"
+        ],
+        "settings": {
+          "title": "Select Your Free Gift"
+        }
+      },
+      "product-recommendations": {
+        "type": "product-recommendations",
+        "settings": {
+        }
+      }
+    },
+    "content_for_index": [
+
+    ],
+    "blocks": {
+      "17120474394303709468": {
+        "type": "shopify:\/\/apps\/platter\/blocks\/video-testimonials\/483c6115-a647-4bea-b611-4401ca7d1013",
+        "disabled": false,
+        "settings": {
+        }
+      }
+    },
+    "color_schemes": {
+      "color_scheme_1": {
+        "settings": {
+          "text": "#000000",
+          "overlay_text": "#ffffff",
+          "bg": "#ffffff",
+          "bg_gradient": "",
+          "primary_text": "#ffffff",
+          "primary_bg": "#ce9440",
+          "primary_bg_gradient": "",
+          "primary_outline": "#ce9440",
+          "secondary_text": "#ce9440",
+          "secondary_bg": "#ffffff",
+          "secondary_bg_gradient": "",
+          "secondary_outline": "#ffffff"
+        }
+      },
+      "color_scheme_2": {
+        "settings": {
+          "text": "#000000",
+          "overlay_text": "#ffffff",
+          "bg": "#f2f2f2",
+          "bg_gradient": "",
+          "primary_text": "#ce9440",
+          "primary_bg": "#ffffff",
+          "primary_bg_gradient": "",
+          "primary_outline": "#ce9440",
+          "secondary_text": "#000000",
+          "secondary_bg": "#ce9440",
+          "secondary_bg_gradient": "",
+          "secondary_outline": "#ce9440"
+        }
+      },
+      "color_scheme_3": {
+        "settings": {
+          "text": "#ffffff",
+          "overlay_text": "#ffffff",
+          "bg": "#ce9440",
+          "bg_gradient": "linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(240, 240, 240, 0.15) 100%)",
+          "primary_text": "#ce9440",
+          "primary_bg": "#ffffff",
+          "primary_bg_gradient": "",
+          "primary_outline": "#ffffff",
+          "secondary_text": "#ffffff",
+          "secondary_bg": "#000000",
+          "secondary_bg_gradient": "",
+          "secondary_outline": "rgba(0,0,0,0)"
+        }
+      },
+      "color_scheme_4": {
+        "settings": {
+          "text": "#000000",
+          "overlay_text": "#ffffff",
+          "bg": "#ffffff",
+          "bg_gradient": "",
+          "primary_text": "#ffffff",
+          "primary_bg": "#000000",
+          "primary_bg_gradient": "",
+          "primary_outline": "#000000",
+          "secondary_text": "#ffffff",
+          "secondary_bg": "#ce9440",
+          "secondary_bg_gradient": "",
+          "secondary_outline": "#ce9440"
+        }
+      },
+      "color_scheme_5": {
+        "settings": {
+          "text": "#ffffff",
+          "overlay_text": "#000000",
+          "bg": "#000000",
+          "bg_gradient": "",
+          "primary_text": "#ffffff",
+          "primary_bg": "#ce9440",
+          "primary_bg_gradient": "",
+          "primary_outline": "#ffffff",
+          "secondary_text": "#ce9440",
+          "secondary_bg": "#ffffff",
+          "secondary_bg_gradient": "",
+          "secondary_outline": "#ffffff"
+        }
+      }
+    }
+  },
+  "presets": {
+    "Default": {
+    },
+    "Accelerate": {
+    }
+  }
+}

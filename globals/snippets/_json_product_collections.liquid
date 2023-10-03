@@ -1,0 +1,62 @@
+{%- liquid
+
+  assign product_collections_options = 'id,handle,updated_at,published_at,sort_order,template_suffix,published_scope,title,body_html,image' | split: ','
+
+  assign subset = select | strip_newlines | replace: ' ', "" | split: ',' | default: product_collections_options
+
+  assign subset_with_prefix = subset | join: ",|" | prepend: "|" | split: ','
+  assign select_with_prefix = subset_with_prefix | join: ","
+
+  for item in subset
+    assign test_item = item | split: '.' | first
+    if product_collections_options contains test_item
+      assign opt = opt | join: ',' | append: ',' | append: test_item | split: ','
+    endif
+  endfor
+
+  assign options = opt | join: ',' | split: ','
+
+  if options.size == 0
+    assign options = product_collections_options
+  endif
+
+  assign options = options | sort
+
+-%}
+ 
+{%- capture json -%}
+  {
+  {%- if options contains "id" -%}
+    ,"id": {{- input["id"] | json -}}
+  {%- endif -%}
+  {%- if options contains "handle" -%}
+    ,"handle": {{- input["handle"] | json -}}
+  {%- endif -%}
+  {%- if options contains "updated_at" -%}
+    ,"updated_at": "{{- input["updated_at"] | date: "%Y-%m-%dT%H:%M:%S%z" -}}"
+  {%- endif -%}
+  {%- if options contains "published_at" -%}
+    ,"published_at": "{{- input["published_at"] | date: "%Y-%m-%dT%H:%M:%S%z" -}}"
+  {%- endif -%}
+  {%- if options contains "sort_order" -%}
+    ,"sort_order": {{- input["sort_order"] | json -}}
+  {%- endif -%}
+  {%- if options contains "template_suffix" -%}
+    ,"template_suffix": {{- input["template_suffix"] | json -}}
+  {%- endif -%}
+  {%- if options contains "published_scope" -%}
+    ,"published_scope": {{- input["published_scope"] | json -}}
+  {%- endif -%}
+  {%- if options contains "title" -%}
+    ,"title": {{- input["title"] | json -}}
+  {%- endif -%}
+  {%- if options contains "body_html" -%}
+    ,"body_html": {{- input["body_html"] | json -}}
+  {%- endif -%}
+  {%- if options contains "image" -%}
+    ,"image": {{- input["image"] | json -}}
+  {%- endif -%}
+  }
+{%- endcapture -%}
+
+{{- json | remove_first: ',' | trim | strip_newlines -}}

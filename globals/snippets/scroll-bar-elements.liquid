@@ -1,0 +1,61 @@
+{% case element %}
+  {% when "scrollbar" %}
+    <div class="group/scrollbar absolute top-full flex h-4 w-full cursor-pointer touch-none items-center {{ class }}"
+         data-scroll-bar>
+      <div class="relative h-0.5 w-full bg-gray-200 transition-all ease-in-out group-hover/scrollbar:h-0.5">
+        <button type="button"
+                class="absolute top-1/2 flex min-h-full cursor-grab items-center justify-center py-2 will-change-transform active:cursor-grabbing [&:active_div]:!h-0.5"
+                data-scroll-bar-thumb
+                aria-label="Scrollbar Thumb">
+          <span class="block h-0.5 w-full bg-gray-900 transition-all ease-in-out group-hover/scrollbar:h-0.5"></span>
+        </button>
+      </div>
+    </div>
+  {% when "scrollbar_with_buttons" %}
+    <footer data-scroll-controls
+            class="hidden select-none container relative">
+      <div class="relative">
+        {% render 'scroll-bar-elements', element: 'scrollbar' %}
+      </div>
+      <button class="group absolute top-2 right-14 -translate-y-1/2 w-8 h-8 text-gray-400 hf:text-gray-900 transition-all ease-in-out stroke-2 bg-theme-bg rounded-full flex items-center justify-center border border-gray-200 shadow"
+              style="opacity: 0; pointer-events: none"
+              data-scroll-prev>
+        <span class="sr-only">
+          <t>Show Previous Item</t>
+        </span>
+        <svg class="mr-1 h-3 w-3 stroke-2 rotate-180"
+             fill="none"
+             viewBox="0 0 10 10"
+             aria-hidden="true"
+             stroke="currentColor"
+        >
+          <path class="opacity-0 transition group-hover:opacity-100"
+                d="M0 5h7"
+          ></path>
+          <path class="transition group-hover:translate-x-[3px]"
+                d="M1 1l4 4-4 4"
+          ></path>
+        </svg>
+      </button>
+      <button class="group absolute top-2 right-5 -translate-y-1/2 w-8 h-8 text-gray-400 hf:text-gray-900 transition-all ease-in-out stroke-2 bg-theme-bg rounded-full flex items-center justify-center border border-gray-200 shadow"
+              style="opacity: 0; pointer-events: none"
+              data-scroll-next>
+        <span class="sr-only">
+          <t>Show Next Item</t>
+        </span>
+        <svg class="ml-1 h-3 w-3 stroke-2"
+             fill="none"
+             viewBox="0 0 10 10"
+             aria-hidden="true"
+             stroke="currentColor"
+        >
+          <path class="opacity-0 transition group-hover:opacity-100"
+                d="M0 5h7"
+          ></path>
+          <path class="transition group-hover:translate-x-[3px]"
+                d="M1 1l4 4-4 4"
+          ></path>
+        </svg>
+      </button>
+    </footer>
+{% endcase %}
